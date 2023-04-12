@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Sprite;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +21,9 @@ public class Game extends Canvas implements Runnable {
     public static Sprite background;
     public static int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static int HEIGHT= (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    public static double percent = HEIGHT/1080.00;
     public static String NAME = "Catan";
-    private int x = (WIDTH - getSprite("pole.png").getWidth())/2;
+    private int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
     private static int y = 0;
     public ArrayList<Sprite> hexes = new ArrayList<>();
     public static Sprite f;
@@ -53,6 +56,7 @@ public class Game extends Canvas implements Runnable {
         a = getSprite("sand_hex.png");
         w = getSprite("woods_hex.png");
         b = getSprite("brick_hex.png");
+        System.out.println(x);
         hexes.addAll(Arrays.asList(f,f,f,f,s,s,s,s,t,t,t,w,w,w,w,b,b,b));
         List<Integer> values = List.of(5,2,6,10,9,4,3,8,11,0,5,8,4,3,6,10,11,12,9);
         Collections.shuffle(hexes);
@@ -91,7 +95,7 @@ public class Game extends Canvas implements Runnable {
                 weight = 660;
                 height += 170;
             }
-            it.draw(g, weight, height);
+            it.draw(g, (int) (weight * percent), (int) (height * percent));
             number++;
         }
         pole.draw(g,x,y);
