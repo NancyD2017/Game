@@ -21,7 +21,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite background;
     public static int WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     public static int HEIGHT= (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    public static double percent = HEIGHT/1080.00;
+    public static double percent = WIDTH/1920.00;
     public static String NAME = "Catan";
     private int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
     private static int y = 0;
