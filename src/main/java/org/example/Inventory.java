@@ -10,4 +10,7 @@ public class Inventory {
         Integer points;
         List<Sprite> ports;
     }
+
+    public Inventory() {
+    }
 }

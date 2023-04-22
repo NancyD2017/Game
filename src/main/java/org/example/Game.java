@@ -14,7 +14,6 @@ public class Game extends Canvas implements Runnable {
     public static int HEIGHT= (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     public static double percent = WIDTH/1920.00;
     public int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
-    static Integer howManyGamers;
     public void run() {
        Pole.init();
        GreetingWindow.init();

@@ -30,9 +30,12 @@ public class Pole {
         List<Integer> values = List.of(5,2,6,10,9,4,3,8,11,0,5,8,4,3,6,10,11,12,9);
         Collections.shuffle(hexes);
         hexes.add(9, a);
-        Map<Integer, Sprite> description = new HashMap<>();
-        for (int i = 0; i < hexes.size() - 1; i++) {
-            description.put(values.get(i), hexes.get(i));
+        Map<Integer, List<Sprite>> description = new HashMap<>();
+        for (int i = 0; i < hexes.size(); i++) {
+            if (!description.containsKey(values.get(i))) {
+                description.put(values.get(i), new ArrayList<>());
+            }
+            description.get(values.get(i)).add(hexes.get(i));
         }
     }
     public static void perform(Integer x, Graphics g){
