@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,14 +32,11 @@ public class GreetingWindow extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         players = Integer.valueOf(e.getActionCommand());
     }
-
-    public static void createAndShowGUI() {
+    public static void init() {
         Game q = new Game();
-
         greeting = q.getSprite("greeting.png");
         JFrame frame = new JFrame("Players number");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //greeting.draw(g,0, 0);
         GreetingWindow newContentPane = new GreetingWindow();
         newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
@@ -46,8 +44,10 @@ public class GreetingWindow extends JPanel implements ActionListener {
         frame.pack();
         frame.setVisible(true);
     }
-    public static void init() {
-        Game q = new Game();
-        greeting = q.getSprite("greeting.png");
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        greeting.draw(g,0,0);
     }
+
+
 }

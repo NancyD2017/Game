@@ -32,11 +32,12 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.fillRect(0,0, getWidth(), getHeight());
         Pole.perform(x,g);
-        //GreetingWindow.createAndShowGUI();
         g.dispose();
         bs.show();
     }
     public void update() {
+    }
+    public void init(){
     }
     public static void main(String[] args) {
         Game game = new Game();

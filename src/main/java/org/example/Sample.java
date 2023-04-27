@@ -3,9 +3,9 @@ package org.example;
 import java.util.*;
 
 public class Sample {
-    public static Integer players;
-    public static Scanner in = new Scanner(System.in);
-    public static ArrayList<Character> hexes = new ArrayList<>();
+    static Integer players;
+    static Scanner in = new Scanner(System.in);
+    static ArrayList<Character> hexes = new ArrayList<>();
 
     static class Triple {
         Integer col;
@@ -19,7 +19,7 @@ public class Sample {
         }
     }
 
-    public static char[][] disposition = {
+    static char[][] disposition = {
             {'0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0'},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
             {'r', 'r', 'r', 'r'},                                                                                       //0 означает место построения города или поселения, r - дорожки
             {'0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0'},                      //если игрок что-то построил на конкретном месте, там высветятся нужные буквы,
@@ -32,8 +32,8 @@ public class Sample {
             {'r', 'r', 'r', 'r'},
             {'0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0'}
     };
-    public static ArrayList<String> evolutionCards = new ArrayList<>();                                                 //специальные карточки (для удобства можно посмотреть main/resources/c_..., там они все описаны)
-    public static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());            //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
+    static ArrayList<String> evolutionCards = new ArrayList<>();                                                 //специальные карточки (для удобства можно посмотреть main/resources/c_..., там они все описаны)
+    static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());            //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
     static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
     static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
     static Player mostKnightsHolder = playerList.get(0);
@@ -96,8 +96,7 @@ public class Sample {
         polePrinting();
         gameProcess();
     }
-
-    public static void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
+   static void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
         while (mostPoints < 10) {
             for (int k = 0; k < players; k++) {
                 Random random = new Random();
@@ -134,8 +133,7 @@ public class Sample {
         System.out.println("Поздравляю победителя!");
         System.out.println("Больше всего очков набрал: " + playerList.indexOf(mostPointsHolder));
     }
-
-    public static void polePrinting() {                                                                                 //печатает поле для удобства игроков
+    static void polePrinting() {                                                                                 //печатает поле для удобства игроков
         int spaces = 8;
         for (int row = 0; row < 11; row++) {
             System.out.print(" ".repeat(spaces));
@@ -148,8 +146,7 @@ public class Sample {
             else if (row % 2 == 0 && row > 5) spaces += 4;
         }
     }
-
-    public static boolean coordinatesCheck(int row, int column) {                                                       //помогает избежать ошибок, если игрок ввел неправильный ряд или столбик
+    static boolean coordinatesCheck(int row, int column) {                                                       //помогает избежать ошибок, если игрок ввел неправильный ряд или столбик
         if (column >= 0 && row >= 0) {
             return ((row == 0 || row == 10) && (column <= 12)) || ((row == 1 || row == 9) && (column <= 3))
                     || ((row == 2 || row == 8) && (column <= 16)) || ((row == 3 || row == 7) && (column <= 4))
@@ -157,8 +154,7 @@ public class Sample {
         }
         return false;
     }
-
-    public static int isNumber() {                                                                                      //устраняет ошибки, когда пользователь ввел не число
+    static int isNumber() {                                                                                      //устраняет ошибки, когда пользователь ввел не число
         boolean isOk = false;
         int number = 0;
         while (!isOk) {
@@ -172,8 +168,7 @@ public class Sample {
         }
         return number;
     }
-
-    public static int firstBuilding(String choice, HashSet<String> colors, Player player) {                             //осуществляет постройку первого поселения и дорожки игрока
+    static int firstBuilding(String choice, HashSet<String> colors, Player player) {                             //осуществляет постройку первого поселения и дорожки игрока
         System.out.println("Выберите положение поселения на поле. посмотрите на выведенное поле выше и выберите ряд (от 1 до 11) и столбец (от 1 до 4 или больше, в зависимости от ряда)");
         int row = isNumber() - 1;
         int column = isNumber() - 1;
@@ -219,8 +214,7 @@ public class Sample {
         }
         return 0;
     }
-
-    public static void getResources(Integer row, Integer column, Player player) {                                       //правила для добавления чисел на поля (то есть, какой ресурс получает игрок в зависимости от номера на кубиках)
+    static void getResources(Integer row, Integer column, Player player) {                                       //правила для добавления чисел на поля (то есть, какой ресурс получает игрок в зависимости от номера на кубиках)
         if ((row == 0 && (column == 4 || column == 6 || column == 8)) || (row == 2 && (column == 6 || column == 8 || column == 10))) {
             player.element.put(2, List.of(hexes.get(1)));
         }
@@ -324,8 +318,7 @@ public class Sample {
             player.element.put(12, List.of(hexes.get(16)));
         }
     }
-
-    public static void possiblePorts(Integer rowR, Integer columnR, Player player) {                                    //смотрит, какие порты есть у игрока для обмена. Правила прописала на основе игры
+    static void possiblePorts(Integer rowR, Integer columnR, Player player) {                                    //смотрит, какие порты есть у игрока для обмена. Правила прописала на основе игры
         switch (rowR) {
             case 0 -> {
                 if (columnR == 5 || columnR == 7 || columnR == 9) player.ports.add("s");
@@ -373,8 +366,7 @@ public class Sample {
             }
         }
     }
-
-    public static int build(Player player) {                                                                            //строит поселение, город или дорожку при наступлении хада игрока
+    static int build(Player player) {                                                                            //строит поселение, город или дорожку при наступлении хада игрока
         System.out.println("Что вы хотите построить?\nЕсли дорожку - введите R\nпоселение - t\nгород - c\n");
         String someBuilding = in.next();
         boolean allRight = false;
@@ -493,8 +485,7 @@ public class Sample {
             return 1;
         } else return 0;
     }
-
-    public static void exchangeWithPorts(Player player) {                                                               //осуществляет обмен игрока с портами
+    static void exchangeWithPorts(Player player) {                                                               //осуществляет обмен игрока с портами
         if (player.ports.size() == 0) {
             System.out.println("Выберите ресурсы для обмена 1:4 - введите названия 4 своих ресурсов без пробелов");
             String playerGives = in.next();
@@ -538,8 +529,7 @@ public class Sample {
             } else System.out.println("Вы неправильно ввели порт или то, что хотите получить взамен");
         }
     }
-
-    public static void exchangeWithPlayer(Player player) {                                                              //осуществляет обмен игрока с другими игроками
+    static void exchangeWithPlayer(Player player) {                                                              //осуществляет обмен игрока с другими игроками
         System.out.println("С каким игроком вы хотите обменяться? Введите цифру от 1 до 4 в зависимости от номера игрока");
         int exchanger = isNumber();
         Player nameExchanger = playerList.get(exchanger - 1);
@@ -570,16 +560,14 @@ public class Sample {
             } else System.out.println(" игрок " + exchanger + " не согласен на обмен");
         } else System.out.println("Вы ввели номер игрока, с которым хотите обменяться, неправильно");
     }
-
-    public static boolean checkInsExchange(String[] input) {                                                            //так как ресурсы при обмене должны быть введены верно, я ввела обозначения и добавила эту функцию
+    static boolean checkInsExchange(String[] input) {                                                            //так как ресурсы при обмене должны быть введены верно, я ввела обозначения и добавила эту функцию
         for (String item : input) {                                                                                     //b - кирпич, w - дерево, t - камень, s - сено, f - овцы,
             if (!(item.equals("b") || item.equals("w") || item.equals("t") || item.equals("s") || item.equals("f")))
                 return false;
         }
         return true;
     }
-
-    public static void buyEvolutionCard(Player player) {                                                                //действие для каждой карточки развития, будь то рыцарь, постройка дорожек, получение очков для победы
+    static void buyEvolutionCard(Player player) {                                                                //действие для каждой карточки развития, будь то рыцарь, постройка дорожек, получение очков для победы
         List<Character> toRemove = List.of('s', 'f', 't');
         if (new HashSet<>(player.cards).containsAll(toRemove)) {
             for (Character ch : toRemove) {
@@ -687,8 +675,7 @@ public class Sample {
             }
         } else System.out.println("У вас недостаточно ресурсов");
     }
-
-    public static Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
+    static Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
         while (!allRight) {
             System.out.println(" игрок " + (l + 1) + ", ваш ход. Вот ваши ресурсы " + player.cards);
