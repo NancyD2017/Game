@@ -96,7 +96,7 @@ public class Sample {
         polePrinting();
         gameProcess();
     }
-   static void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
+    static void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
         while (mostPoints < 10) {
             for (int k = 0; k < players; k++) {
                 Random random = new Random();

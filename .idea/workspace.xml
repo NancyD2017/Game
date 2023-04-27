@@ -8,8 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GreetingWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GreetingWindow.java" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Inventory.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Sample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Sample.java" afterDir="false" />
+=======
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +47,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -54,6 +58,16 @@
     &quot;last_directory_selection&quot;: &quot;C:/Users/PC/IdeaProjects/Game/src/main/java&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Анастасия/Documents/GitHub/G&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_directory_selection": "C:/Users/PC/IdeaProjects/Game/src/main/java",
+    "last_opened_file_path": "C:/Users/Анастасия/Downloads/BigBrotherIsWatchingYou-1.0-SNAPSHOT.jar",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+>>>>>>> Stashed changes
   }
 }</component>
   <component name="RecentsManager">

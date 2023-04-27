@@ -15,25 +15,27 @@ public class Game extends Canvas implements Runnable {
     public static double percent = WIDTH/1920.00;
     public int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
     public void run() {
-       Pole.init();
-       GreetingWindow.init();
-        while (running) {
-            render();
+        GreetingWindow.init();
+        if (GreetingWindow.isPerformed) {
+            Pole.init();
+            while (running) {
+                render();
+            }
         }
     }
 
     public void render(){
-        BufferStrategy bs = getBufferStrategy();
-        if (bs == null) {
-            createBufferStrategy(2);
-            requestFocus();
-            return;
-        }
-        Graphics g = bs.getDrawGraphics();
-        g.fillRect(0,0, getWidth(), getHeight());
-        Pole.perform(x,g);
-        g.dispose();
-        bs.show();
+               BufferStrategy bs = getBufferStrategy();
+               if (bs == null) {
+                   createBufferStrategy(2);
+                   requestFocus();
+                   return;
+               }
+               Graphics g = bs.getDrawGraphics();
+               g.fillRect(0, 0, getWidth(), getHeight());
+               Pole.perform(x, g);
+               g.dispose();
+               bs.show();
     }
     public void update() {
     }
