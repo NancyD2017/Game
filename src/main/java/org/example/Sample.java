@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.*;
 
-public class Sample {
+public class Sample { // remove statics
     static Integer players;
     static Scanner in = new Scanner(System.in);
     static ArrayList<Character> hexes = new ArrayList<>();
@@ -10,7 +10,7 @@ public class Sample {
     static class Triple {
         Integer col;
         Integer ro;
-        char item;
+        char item; // replace to enum
 
         Triple(Integer ro, Integer col, char item) {
             this.ro = ro;
@@ -32,7 +32,7 @@ public class Sample {
             {'r', 'r', 'r', 'r'},
             {'0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0', 'r', '0'}
     };
-    static ArrayList<String> evolutionCards = new ArrayList<>();                                                 //специальные карточки (для удобства можно посмотреть main/resources/c_..., там они все описаны)
+    static ArrayList<String> evolutionCards = new ArrayList<>(); //create classes for each type of card                                              //специальные карточки (для удобства можно посмотреть main/resources/c_..., там они все описаны)
     static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());            //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
     static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
     static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
@@ -40,8 +40,8 @@ public class Sample {
     static int leastRoadsLeft = 13;
     static Player leastRoadsLeftHolder = playerList.get(0);
     static Player mostPointsHolder = playerList.get(0);
-    static class Player {
-        String color;
+    static class Player { // distinct class
+        String color; // enum
         Set<Triple> available = new HashSet<>();                                                                        //показывает расположение фигурок этого игрока в формате: ряд, столбец, название
         List<Character> cards = new ArrayList<>();                                                                      //карточки ресурсов для каждого игрока, с помощью которых можно что-то купить, обменять
         Integer points = 0;
@@ -214,7 +214,7 @@ public class Sample {
         }
         return 0;
     }
-    static void getResources(Integer row, Integer column, Player player) {                                       //правила для добавления чисел на поля (то есть, какой ресурс получает игрок в зависимости от номера на кубиках)
+    static void getResources(Integer row, Integer column, Player player) {       // maybe simplify???                                 //правила для добавления чисел на поля (то есть, какой ресурс получает игрок в зависимости от номера на кубиках)
         if ((row == 0 && (column == 4 || column == 6 || column == 8)) || (row == 2 && (column == 6 || column == 8 || column == 10))) {
             player.element.put(2, List.of(hexes.get(1)));
         }
