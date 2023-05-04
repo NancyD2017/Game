@@ -1,15 +1,18 @@
 package org.example.Model;
 
+import org.example.Pole;
+import org.example.Sprite;
+
 import java.util.*;
 import java.util.List;
 
 
 import static java.lang.System.out;
 
-class Model {
+public class Model {
     Integer players;
     Scanner in = new Scanner(System.in);
-    ArrayList<Character> hexes = new ArrayList<>();
+    ArrayList<Sprite> hexes = new ArrayList<>();
     Item[][] field = {
             {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
             {Item.P, Item.P, Item.P, Item.P},                                                                                                                   //E означает место построения города или поселения, NR - дорожки
@@ -32,16 +35,17 @@ class Model {
     Player leastRoadsLeftHolder = playerList.get(0);
     Player mostPointsHolder = playerList.get(0);
     List<Color> colors = new ArrayList<>(Arrays.asList(Color.values()));
-    FirstBuilding f = new FirstBuilding();
-    ExchangeWithPlayer p = new ExchangeWithPlayer();
+    FirstBuilding first = new FirstBuilding();
+    ExchangeWithPlayer exchangeWithPlayer = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
-    EvolutionCards c = new EvolutionCards();
-    Build b = new Build();
+    EvolutionCards cardsEvo = new EvolutionCards();
+    Build built = new Build();
+
     public void main(String[] args) {
-        hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
+        hexes.addAll(Arrays.asList(Pole.f,Pole.f,Pole.f,Pole.f,Pole.s,Pole.s,Pole.s,Pole.s,Pole.t,Pole.t,Pole.t,Pole.w,Pole.w,Pole.w,Pole.w,Pole.b,Pole.b,Pole.b)); //случайным образом создает поле
         List<Integer> values = List.of(5, 2, 6, 10, 9, 4, 3, 8, 11, 5, 8, 4, 3, 6, 10, 11, 12, 9);
         Collections.shuffle(hexes);
-        Map<Integer, List<Character>> description = new HashMap<>();
+        Map<Integer, List<Sprite>> description = new HashMap<>();
         for (int i = 0; i < hexes.size(); i++) {
             if (!description.containsKey(values.get(i))) {
                 description.put(values.get(i), new ArrayList<>());
@@ -68,7 +72,7 @@ class Model {
             try {
                 Color mcolor = Color.valueOf(choice);
                 playerList.get(i).color = mcolor;
-                i -= f.main(playerList.get(i), mcolor);
+                i -= first.main(playerList.get(i), mcolor);
             } catch (IllegalArgumentException e) {
                 out.println("Попробуйте еще раз");
                 i -= 1;
@@ -77,12 +81,12 @@ class Model {
         polePrinting();
         for (int i = players; i > 0; i--) {
             out.println("\nигрок " + i + ", ваш ход. Постройте еще 1 поселение и дорожку");
-            i += f.main(playerList.get(i), playerList.get(i).color);
+            i += first.main(playerList.get(i), playerList.get(i).color);
         }
         polePrinting();
         gameProcess();
     }
-    void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
+    public void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
         while (mostPoints < 10) {
             boolean retakeTurn = false;
             for (int k = 0; k < players; k++) {
@@ -94,7 +98,7 @@ class Model {
                     }
                     out.println("Выпало число " + cubesNumber);
                     for (int pointsForPlayer = 0; pointsForPlayer < players; pointsForPlayer++) {
-                        List<Character> elementsToReceive = playerList.get(pointsForPlayer).element.get(cubesNumber);
+                        List<Sprite> elementsToReceive = playerList.get(pointsForPlayer).element.get(cubesNumber);
                         if (elementsToReceive != null) playerList.get(pointsForPlayer).cards.addAll(elementsToReceive);
                     }
                 }
@@ -171,7 +175,7 @@ class Model {
             switch (action) {
                 case 1 -> {
                     allRight = true;
-                    l -= b.main(player);
+                    l -= built.main(player);
                 }
                 case 2 -> {
                     allRight = true;
@@ -179,11 +183,11 @@ class Model {
                 }
                 case 3 -> {
                     allRight = true;
-                    p.main(player);
+                    exchangeWithPlayer.main(player);
                 }
                 case 4 -> {
                     allRight = true;
-                    c.main(player);
+                    cardsEvo.main(player);
                 }
                 case 0 -> allRight = true;
                 default -> out.println("Вы ввели не то действие. Попробуйте еще раз");

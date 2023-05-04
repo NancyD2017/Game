@@ -3,6 +3,7 @@ package org.example;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import org.example.Model.*;
 
 import static org.example.Game.*;
 
@@ -18,6 +19,7 @@ public class Pole {
     public static Sprite b;
     public static void init(){
         Game q = new Game();
+        Model model = new Model();
         pole = q.getSprite("pole.png");
         background = q.getSprite("background.png");
         f = q.getSprite("field_hex.png");
@@ -26,7 +28,7 @@ public class Pole {
         a = q.getSprite("sand_hex.png");
         w = q.getSprite("woods_hex.png");
         b = q.getSprite("brick_hex.png");
-        hexes.addAll(Arrays.asList(f,f,f,f,s,s,s,s,t,t,t,w,w,w,w,b,b,b));
+        model.gameProcess();
         List<Integer> values = List.of(5,2,6,10,9,4,3,8,11,0,5,8,4,3,6,10,11,12,9);
         Collections.shuffle(hexes);
         hexes.add(9, a);
