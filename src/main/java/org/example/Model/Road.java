@@ -5,15 +5,18 @@ import java.util.Set;
 
 class Road {
     boolean main(Player player) {
+        Model m = new Model();
+        CoordinatesCheck c = new CoordinatesCheck();
+        PossiblePorts p = new PossiblePorts();
         boolean allRight = false;
         System.out.println("Введите расположение дорожки около города, поселения или другой дорожки ");
-        int rowR = Model.isNumber() - 1;
-        int columnR = Model.isNumber() - 1;
+        int rowR = m.isNumber() - 1;
+        int columnR = m.isNumber() - 1;
         Set<FieldItem> toAdd = new HashSet<>();
         Set<FieldItem> playersArsenal = player.available;
-        if (CoordinatesCheck.main(rowR, columnR)) {
+        if (c.main(rowR, columnR)) {
             for (FieldItem t : playersArsenal) {
-                if ((Model.field[rowR][columnR] == Item.P) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
+                if ((m.field[rowR][columnR] == Item.P) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
                         ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 - 1 == columnR) && (t.ro <= 5) && (t.ro == 1 + rowR)) ||
                         ((t.col * 4 - 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 + 3 == columnR) && (t.ro <= 3) && (t.ro + 1 == rowR)) ||
                         ((t.col * 4 + 3 == columnR) && (t.ro >= 7) && (t.ro == rowR + 1)) || ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro == rowR + 1)) ||
@@ -27,8 +30,8 @@ class Road {
                                 ((((t.ro == 6 || t.ro == 4) && rowR == 5) || (t.ro < 4 && rowR == 1 + t.ro) || (t.ro > 6 && rowR + 1 == t.ro)) && columnR * 4 == t.col) ||
                                 (t.ro <= 4 && columnR * 4 + 2 == t.col && rowR + 1 == t.ro) || (t.ro >= 6 && columnR * 4 + 2 == t.col && rowR == 1 + t.ro))))) {
                     toAdd.add(new FieldItem(rowR, columnR, Item.R));
-                    Model.field[rowR][columnR] = Item.R;
-                    PossiblePorts.main(rowR, columnR, player);
+                    m.field[rowR][columnR] = Item.R;
+                    p.main(rowR, columnR, player);
                     allRight = true;
                     System.out.println("Дорожка построена!");
                 }

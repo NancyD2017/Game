@@ -32,6 +32,11 @@ class Model {
     Player leastRoadsLeftHolder = playerList.get(0);
     Player mostPointsHolder = playerList.get(0);
     List<Color> colors = new ArrayList<>(Arrays.asList(Color.values()));
+    FirstBuilding f = new FirstBuilding();
+    ExchangeWithPlayer p = new ExchangeWithPlayer();
+    ExchangeWithPorts ports = new ExchangeWithPorts();
+    EvolutionCards c = new EvolutionCards();
+    Build b = new Build();
     public void main(String[] args) {
         hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
         List<Integer> values = List.of(5, 2, 6, 10, 9, 4, 3, 8, 11, 5, 8, 4, 3, 6, 10, 11, 12, 9);
@@ -63,7 +68,7 @@ class Model {
             try {
                 Color mcolor = Color.valueOf(choice);
                 playerList.get(i).color = mcolor;
-                i -= FirstBuilding.main(playerList.get(i), mcolor);
+                i -= f.main(playerList.get(i), mcolor);
             } catch (IllegalArgumentException e) {
                 out.println("Попробуйте еще раз");
                 i -= 1;
@@ -72,7 +77,7 @@ class Model {
         polePrinting();
         for (int i = players; i > 0; i--) {
             out.println("\nигрок " + i + ", ваш ход. Постройте еще 1 поселение и дорожку");
-            i += FirstBuilding.main(playerList.get(i), playerList.get(i).color);
+            i += f.main(playerList.get(i), playerList.get(i).color);
         }
         polePrinting();
         gameProcess();
@@ -166,19 +171,19 @@ class Model {
             switch (action) {
                 case 1 -> {
                     allRight = true;
-                    l -= Build.main(player);
+                    l -= b.main(player);
                 }
                 case 2 -> {
                     allRight = true;
-                    ExchangeWithPorts.main(player);
+                    ports.main(player);
                 }
                 case 3 -> {
                     allRight = true;
-                    ExchangeWithPlayer.main(player);
+                    p.main(player);
                 }
                 case 4 -> {
                     allRight = true;
-                    EvolutionCards.main(player);
+                    c.main(player);
                 }
                 case 0 -> allRight = true;
                 default -> out.println("Вы ввели не то действие. Попробуйте еще раз");

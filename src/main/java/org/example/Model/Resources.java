@@ -208,6 +208,7 @@ class Resources {
         if (!player.element.containsKey(element)) {
             player.element.put(element, new ArrayList<>());
         }
-        player.element.get(element).add(Model.hexes.get(hexIndex));
+        Model m = new Model();
+        player.element.get(element).add(m.hexes.get(hexIndex));
     }
 }
