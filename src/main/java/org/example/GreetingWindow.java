@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.charset.StandardCharsets;
 
 public class GreetingWindow extends JPanel implements ActionListener {
     protected JButton b1, b2, b3;
@@ -13,11 +12,6 @@ public class GreetingWindow extends JPanel implements ActionListener {
     public static boolean isPerformed = true;
     public GreetingWindow() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel("<html><div style='text-align: center;'>Hello, players!<br>Welcome to the game Catan: colonists.<br><br>Please, choose the number of players:<br><br></div></html>");
-        label.setFont(new Font("Palatino Linotype", Font.PLAIN, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalGlue());
-        add(label);
         b1 = new JButton("2 players");
         b1.setAlignmentX(Component.CENTER_ALIGNMENT);
         b1.setActionCommand("2");
@@ -47,14 +41,13 @@ public class GreetingWindow extends JPanel implements ActionListener {
     }
     public static void init() {
         Game q = new Game();
-        greeting = q.getSprite("paper.png");
+        greeting = q.getSprite("greeting.png");
         JFrame frame = new JFrame("Players number");
         frame.setLayout(new BorderLayout());
-        frame.add(q, BorderLayout.SOUTH);
+        frame.add(q, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GreetingWindow gw = new GreetingWindow();
         gw.setPreferredSize(new Dimension((int) (greeting.getWidth() * Game.percent), (int) (greeting.getHeight() * Game.percent)));
-        gw.setLayout(new FlowLayout());
         frame.setContentPane(gw);
         frame.setResizable(false);
         frame.pack();

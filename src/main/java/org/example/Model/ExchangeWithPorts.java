@@ -1,7 +1,5 @@
 package org.example.Model;
 
-import org.example.Game;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -12,7 +10,6 @@ import static java.lang.System.out;
 class ExchangeWithPorts {
     void main(Player player) {                                                               //осуществляет обмен игрока с портами
         Model m = new Model();
-        Game q = new Game();
         if (player.ports.size() == 0) {
             out.println("Выберите ресурсы для обмена 1:4 - введите названия 4 своих ресурсов без пробелов");
             String playerGives = m.in.next();
@@ -20,13 +17,11 @@ class ExchangeWithPorts {
             List<String> pg = Arrays.asList(playerGives.split(""));
             List<String> cardStrings = player.cards.stream().map(String::valueOf).toList();
             if (m.checkInsExchange(playerGivesList) && new HashSet<>(cardStrings).containsAll(pg)) {
-                for (String item : playerGivesList) {
-                    player.cards.remove(q.getSprite(item.charAt(0) + "_card.png"));
-                }
+                for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                 out.println("Выберите ресурс, который хотите получить");
                 String[] playerReceives = m.in.next().split("");
                 if (m.checkInsExchange(playerReceives) && playerReceives.length == 1) {
-                    player.cards.add(q.getSprite(playerReceives[0].charAt(0) + "_card.png"));
+                    player.cards.add(playerReceives[0].charAt(0));
                     out.println("Обмен прошел успешно" + player.cards);
                 }
             } else out.println("Недостаточно ресурсов для обмена");
@@ -37,9 +32,9 @@ class ExchangeWithPorts {
             String playerReceives = m.in.next();
             if ((player.ports.contains(playerPort) || playerPort.equals("4")) && m.checkInsExchange(playerReceives.split(""))) {
                 if (!playerPort.equals("3") && !playerPort.equals("4") && Collections.frequency(player.cards, playerPort.charAt(0)) >= 2) {
-                    player.cards.remove(q.getSprite(playerPort.charAt(0) + "_card.png"));
-                    player.cards.remove(q.getSprite(playerPort.charAt(0) + "_card.png"));
-                    player.cards.add(q.getSprite(playerReceives.charAt(0) + "_card.png"));
+                    player.cards.remove(Character.valueOf(playerPort.charAt(0)));
+                    player.cards.remove(Character.valueOf(playerPort.charAt(0)));
+                    player.cards.add(playerReceives.charAt(0));
                     out.println("Обмен прошел успешно" + player.cards);
                 } else if (playerPort.equals("3") || playerPort.equals("4")) {
                     if (player.cards.size() >= Integer.parseInt(playerPort)) {
@@ -49,8 +44,8 @@ class ExchangeWithPorts {
                         List<String> pg = Arrays.asList(playerGives.split(""));
                         List<String> cardStrings = player.cards.stream().map(String::valueOf).toList();
                         if (m.checkInsExchange(playerGivesList) && playerGivesList.length == Integer.parseInt(playerPort) && new HashSet<>(cardStrings).containsAll(pg) && playerReceives.length() == 1) {
-                            for (String item : playerGivesList) player.cards.remove(q.getSprite(item.charAt(0) + "_card.png"));
-                            player.cards.add(q.getSprite(playerReceives.charAt(0) + "_card.png"));
+                            for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
+                            player.cards.add(playerReceives.charAt(0));
                             out.println("Обмен прошел успешно" + player.cards);
                         } else out.println("Вы ввели не то количество отдаваемых ресурсов");
                     } else out.println("Недостаточно ресурсов для обмена");

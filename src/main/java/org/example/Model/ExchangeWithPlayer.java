@@ -1,7 +1,5 @@
 package org.example.Model;
 
-import org.example.Game;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +9,6 @@ import static java.lang.System.out;
 class ExchangeWithPlayer {
     void main(Player player) {                                                              //осуществляет обмен игрока с другими игроками
         Model m = new Model();
-        Game q = new Game();
         out.println("С каким игроком вы хотите обменяться? Введите цифру от 1 до 4 в зависимости от номера игрока");
         int exchanger = m.isNumber();
         Player nameExchanger = m.playerList.get(exchanger - 1);
@@ -30,16 +27,12 @@ class ExchangeWithPlayer {
             if (m.in.next().equals("yes")) {
                 if (m.checkInsExchange(playerReceives) && m.checkInsExchange(playerGivesList) && new HashSet<>(cardStrings).containsAll(pg) && new HashSet<>(cardStrings1).containsAll(pg1)) {
                     for (String item : playerGivesList) {
-                        StringBuilder itemToSprite = new StringBuilder();
-                        itemToSprite.append(item.charAt(0)).append("_card.png");
-                        player.cards.remove(q.getSprite(String.valueOf(itemToSprite)));
-                        nameExchanger.cards.add(q.getSprite(String.valueOf(itemToSprite)));
+                        player.cards.remove(Character.valueOf(item.charAt(0)));
+                        nameExchanger.cards.add(item.charAt(0));
                     }
                     for (String it : playerReceives) {
-                        StringBuilder itToSprite = new StringBuilder();
-                        itToSprite.append(it.charAt(0)).append("_card.png");
-                        player.cards.add(q.getSprite(String.valueOf(itToSprite)));
-                        nameExchanger.cards.remove(q.getSprite(String.valueOf(itToSprite)));
+                        player.cards.add(it.charAt(0));
+                        nameExchanger.cards.remove(Character.valueOf(it.charAt(0)));
                     }
                     out.println("Обмен прошел успешно\nВаши ресурсы " + player.cards + "\nРесурсы соперника: " + nameExchanger.cards);
                 } else out.println("Вы неправильно ввели то, что хотите получить взамен или отдаваемые ресурсы");

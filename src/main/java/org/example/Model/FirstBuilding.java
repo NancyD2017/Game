@@ -1,7 +1,5 @@
 package org.example.Model;
 
-import org.example.Sprite;
-
 import java.util.List;
 
 import static java.lang.System.out;
@@ -52,7 +50,7 @@ class FirstBuilding {
         player.roads -= 1;
         player.towns -= 1;
         e.getResources(row, column, player);
-        if (player.cards.isEmpty()) for (List<Sprite> list : player.element.values()) {
+        if (player.cards.isEmpty()) for (List<Character> list : player.element.values()) {
             player.cards.addAll(list);
         }
         return 0;

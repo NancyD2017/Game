@@ -1,7 +1,5 @@
 package org.example.Model;
 
-import org.example.Game;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +13,6 @@ class Build {
         Road r = new Road();
         Resources e = new Resources();
         CoordinatesCheck o = new CoordinatesCheck();
-        Game q = new Game();
         String someBuilding = m.in.next();
         boolean allRight = false;
         switch (someBuilding) {
@@ -49,7 +46,7 @@ class Build {
                                     out.println("Поселение построено!");
                                     List<Character> toRemove = new ArrayList<>(List.of('b', 'w', 's', 'f'));
                                     for (Character c : toRemove) {
-                                        player.cards.remove(q.getSprite(c  + "_card.png"));
+                                        player.cards.remove(c);
                                     }
                                     break;
                                 }
@@ -79,7 +76,7 @@ class Build {
                                     out.println("Город построен!");
                                     List<Character> toRemove = new ArrayList<>(List.of('s', 's', 't', 't', 't'));
                                     for (Character c : toRemove) {
-                                        player.cards.remove(q.getSprite(c + "_card.png"));
+                                        player.cards.remove(c);
                                     }
                                     break;
                                 }
