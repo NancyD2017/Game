@@ -6,38 +6,38 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-class Model {
-    Integer players;
+public class Model<players> {
+    static Integer players;
     Scanner in = new Scanner(System.in);
-    ArrayList<Character> hexes = new ArrayList<>();
-    Item[][] field = {
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
-            {Item.P, Item.P, Item.P, Item.P},                                                                                                                   //E означает место построения города или поселения, NR - дорожки
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},       //если игрок что-то построил на конкретном месте, там высветятся нужные буквы,
-            {Item.P, Item.P, Item.P, Item.P, Item.P},                                                                                                         //причем P (No road) изменится на R
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},
-            {Item.P, Item.P, Item.P, Item.P, Item.P, Item.P},
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},
-            {Item.P, Item.P, Item.P, Item.P, Item.P},
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E},
-            {Item.P, Item.P, Item.P, Item.P},
-            {Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E, Item.P, Item.E}
+    static public ArrayList<Character> hexes = new ArrayList<>();
+    static Item[][] field = {
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
+            {Item.r, Item.r, Item.r, Item.r},                                                                                                                   //O означает место построения города или поселения, r - дорожки
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},       //если игрок что-то построил на конкретном месте, там высветятся нужные буквы,
+            {Item.r, Item.r, Item.r, Item.r, Item.r},                                                                                                         //причем r (No road) изменится на R
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},
+            {Item.r, Item.r, Item.r, Item.r, Item.r, Item.r},
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},
+            {Item.r, Item.r, Item.r, Item.r, Item.r},
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},
+            {Item.r, Item.r, Item.r, Item.r},
+            {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O}
     };
-    List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
-    ArrayList<String> evolutionCards = new ArrayList<>();                                                        //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
-    int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
-    int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
-    Player mostKnightsHolder = playerList.get(0);
-    int leastRoadsLeft = 13;
-    Player leastRoadsLeftHolder = playerList.get(0);
-    Player mostPointsHolder = playerList.get(0);
-    List<Color> colors = new ArrayList<>(Arrays.asList(Color.values()));
+    static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
+    static ArrayList<String> evolutionCards = new ArrayList<>();                                                        //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
+    static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
+    static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
+    static Player mostKnightsHolder = playerList.get(0);
+    static int leastRoadsLeft = 13;
+    static Player leastRoadsLeftHolder = playerList.get(0);
+    static Player mostPointsHolder = playerList.get(0);
+    static List<Color> colors = new ArrayList<>(Arrays.asList(Color.values()));
     FirstBuilding f = new FirstBuilding();
     ExchangeWithPlayer p = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
-    EvolutionCards c = new EvolutionCards();
+    //StringCatcher catcher = new StringCatcher();//!добавить вместо out.println catcher.get
     Build b = new Build();
-    public void main(String[] args) {
+    public void main() {
         hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
         List<Integer> values = List.of(5, 2, 6, 10, 9, 4, 3, 8, 11, 5, 8, 4, 3, 6, 10, 11, 12, 9);
         Collections.shuffle(hexes);
@@ -61,14 +61,13 @@ class Model {
             players = isNumber();
         }
         polePrinting();
-
         for (int i = 0; i < players; i++) {
             out.println("Выберите цвет фишек для игрока " + (i + 1) + " из возможных: " + colors);
             String choice = in.next();
             try {
                 Color mcolor = Color.valueOf(choice);
                 playerList.get(i).color = mcolor;
-                i -= f.main(playerList.get(i), mcolor);
+                i -= f.main(i, mcolor);
             } catch (IllegalArgumentException e) {
                 out.println("Попробуйте еще раз");
                 i -= 1;
@@ -77,7 +76,7 @@ class Model {
         polePrinting();
         for (int i = players; i > 0; i--) {
             out.println("\nигрок " + i + ", ваш ход. Постройте еще 1 поселение и дорожку");
-            i += f.main(playerList.get(i), playerList.get(i).color);
+            i += f.main(i - 1, playerList.get(i).color);
         }
         polePrinting();
         gameProcess();
@@ -115,6 +114,7 @@ class Model {
                     }
                     if (mostPoints < playerList.get(k).points) {
                         mostPointsHolder = playerList.get(k);
+                        mostPoints = playerList.get(k).points;
                     }
                     retakeTurn = false;
                 }
@@ -171,19 +171,19 @@ class Model {
             switch (action) {
                 case 1 -> {
                     allRight = true;
-                    l -= b.main(player);
+                    l -= b.act(player, hexes);
                 }
                 case 2 -> {
                     allRight = true;
-                    ports.main(player);
+                    ports.act(player);
                 }
                 case 3 -> {
                     allRight = true;
-                    p.main(player);
+                    p.act(player);
                 }
                 case 4 -> {
                     allRight = true;
-                    c.main(player);
+                    new EvolutionCards(new Model(), player).main(player);
                 }
                 case 0 -> allRight = true;
                 default -> out.println("Вы ввели не то действие. Попробуйте еще раз");

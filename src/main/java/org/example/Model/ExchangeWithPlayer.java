@@ -7,12 +7,12 @@ import java.util.List;
 import static java.lang.System.out;
 
 class ExchangeWithPlayer {
-    void main(Player player) {                                                              //осуществляет обмен игрока с другими игроками
+    void act(Player player) {                                                              //осуществляет обмен игрока с другими игроками
         Model m = new Model();
         out.println("С каким игроком вы хотите обменяться? Введите цифру от 1 до 4 в зависимости от номера игрока");
         int exchanger = m.isNumber();
-        Player nameExchanger = m.playerList.get(exchanger - 1);
-        if (exchanger <= m.players && player != nameExchanger) {
+        Player nameExchanger = Model.playerList.get(exchanger - 1);
+        if (exchanger <= Model.players && player != nameExchanger && exchanger > 0) {
             out.println("Список ресурсов игрока " + exchanger + ":" + nameExchanger.cards);
             out.println("Выберите свои ресурсы, которые вы готовы отдать ");
             String playerGives = m.in.next();

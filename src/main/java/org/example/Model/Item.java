@@ -1,8 +1,8 @@
 package org.example.Model;
 
 enum Item {
-    E('0'),
-    P('r'),
+    O('0'),
+    r('r'),
     R('R'),
     T('t'),
     C('c');

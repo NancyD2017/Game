@@ -1,7 +1,7 @@
 package org.example.Model;
 
 class PossiblePorts {
-    void main(Integer rowR, Integer columnR, Player player) {                                    //смотрит, какие порты есть у игрока для обмена. Правила прописала на основе игры
+    void act(Integer rowR, Integer columnR, Player player) {                                    //смотрит, какие порты есть у игрока для обмена. Правила прописала на основе игры
         switch (rowR) {
             case 0 -> {
                 if (columnR == 5 || columnR == 7 || columnR == 9) player.ports.add("s");

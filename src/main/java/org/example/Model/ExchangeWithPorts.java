@@ -8,7 +8,7 @@ import java.util.List;
 import static java.lang.System.out;
 
 class ExchangeWithPorts {
-    void main(Player player) {                                                               //осуществляет обмен игрока с портами
+    void act(Player player) {                                                               //осуществляет обмен игрока с портами
         Model m = new Model();
         if (player.ports.size() == 0) {
             out.println("Выберите ресурсы для обмена 1:4 - введите названия 4 своих ресурсов без пробелов");
@@ -46,7 +46,7 @@ class ExchangeWithPorts {
                         if (m.checkInsExchange(playerGivesList) && playerGivesList.length == Integer.parseInt(playerPort) && new HashSet<>(cardStrings).containsAll(pg) && playerReceives.length() == 1) {
                             for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                             player.cards.add(playerReceives.charAt(0));
-                            out.println("Обмен прошел успешно" + player.cards);
+                            out.println("Обмен прошел успешно. Вот ваши ресурсы " + player.cards);
                         } else out.println("Вы ввели не то количество отдаваемых ресурсов");
                     } else out.println("Недостаточно ресурсов для обмена");
                 } else out.println("Недостаточно ресурсов для обмена");

@@ -2,15 +2,18 @@ package org.example.Model;
 
 import java.util.Collections;
 
-class Evo_Forward2 {
-    boolean main(Player player){
-        Model m = new Model();
+class Evo_Forward2 extends EvolutionCards {
+    Evo_Forward2(Model model, Player player){
+        super(model,player);
+    }
+    @Override
+    boolean action(){
         System.out.println("Можете выбрать 1 ресурс, который вам отдадут все соперники: ");
-        String iReceive = m.in.next();
+        String iReceive = model.in.next();
         String[] ir = iReceive.split("");
-        if (m.checkInsExchange(ir) && ir.length == 1) {
+        if (model.checkInsExchange(ir) && ir.length == 1) {
             int resourcesNumber = 0;
-            for (Player value : m.playerList) {
+            for (Player value : Model.playerList) {
                 resourcesNumber += Collections.frequency(value.cards, ir[0].charAt(0));
                 value.cards.removeAll(Collections.singleton(iReceive.charAt(0)));
             }

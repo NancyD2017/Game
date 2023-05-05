@@ -14,9 +14,9 @@ class Road {
         int columnR = m.isNumber() - 1;
         Set<FieldItem> toAdd = new HashSet<>();
         Set<FieldItem> playersArsenal = player.available;
-        if (c.main(rowR, columnR)) {
+        if (c.act(rowR, columnR)) {
             for (FieldItem t : playersArsenal) {
-                if ((m.field[rowR][columnR] == Item.P) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
+                if ((Model.field[rowR][columnR] == Item.r) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
                         ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 - 1 == columnR) && (t.ro <= 5) && (t.ro == 1 + rowR)) ||
                         ((t.col * 4 - 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 + 3 == columnR) && (t.ro <= 3) && (t.ro + 1 == rowR)) ||
                         ((t.col * 4 + 3 == columnR) && (t.ro >= 7) && (t.ro == rowR + 1)) || ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro == rowR + 1)) ||
@@ -30,8 +30,8 @@ class Road {
                                 ((((t.ro == 6 || t.ro == 4) && rowR == 5) || (t.ro < 4 && rowR == 1 + t.ro) || (t.ro > 6 && rowR + 1 == t.ro)) && columnR * 4 == t.col) ||
                                 (t.ro <= 4 && columnR * 4 + 2 == t.col && rowR + 1 == t.ro) || (t.ro >= 6 && columnR * 4 + 2 == t.col && rowR == 1 + t.ro))))) {
                     toAdd.add(new FieldItem(rowR, columnR, Item.R));
-                    m.field[rowR][columnR] = Item.R;
-                    p.main(rowR, columnR, player);
+                    Model.field[rowR][columnR] = Item.R;
+                    p.act(rowR, columnR, player);
                     allRight = true;
                     System.out.println("Дорожка построена!");
                 }

@@ -2,6 +2,8 @@ package org.example.Model;
 
 import java.util.ArrayList;
 
+import static org.example.Model.Model.hexes;
+
 class Resources {
     void getResources(Integer row, Integer column, Player player) {                                        //правила для добавления чисел на поля (то есть, какой ресурс получает игрок в зависимости от номера на кубиках)
         switch (row) {
@@ -23,7 +25,10 @@ class Resources {
             case 2 -> {
                 switch (column) {
                     case 0 -> addResource(player, 10, 3);
-                    case 2 -> addResource(player, 5, 0);
+                    case 2 -> {
+                        addResource(player, 5, 0);
+                        addResource(player, 10, 3);
+                    }
                     case 4 -> {
                         addResource(player, 10, 3);
                         addResource(player, 5, 0);
@@ -205,10 +210,7 @@ class Resources {
         }
     }
     static void addResource(Player player, int element, int hexIndex) {
-        if (!player.element.containsKey(element)) {
-            player.element.put(element, new ArrayList<>());
-        }
-        Model m = new Model();
-        player.element.get(element).add(m.hexes.get(hexIndex));
+        player.element.put(element, new ArrayList<>());
+        player.element.get(element).add(hexes.get(hexIndex + 1));
     }
 }

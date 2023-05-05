@@ -3,13 +3,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 class EvolutionCards {
+    boolean action() {
+        return true;
+    }
+    Model model;
+    Player player;
+    EvolutionCards(Model model, Player player) {
+        this.model = model;
+        this.player = player;
+    }
     void main(Player player) {                                                                //действие для каждой карточки развития, будь то рыцарь, постройка дорожек, получение очков для победы
         Model m = new Model();
-        Evo_Map map = new Evo_Map();
-        Evo_Forward1 one = new Evo_Forward1();
-        Evo_Forward2 two = new Evo_Forward2();
-        Evo_Knight knight = new Evo_Knight();
-        Evo_All all = new Evo_All();
         List<Character> toRemove = List.of('s', 'f', 't');
             if (new HashSet<>(player.cards).containsAll(toRemove)) {
                 for (Character ch : toRemove) {
@@ -17,18 +21,21 @@ class EvolutionCards {
                         player.cards.remove(ch);
                     }
                 }
-                String playersCard = m.evolutionCards.get(0);
+                String playersCard = Model.evolutionCards.get(0);
                 boolean allRight = false;
-                m.evolutionCards.remove(0);
+                Model.evolutionCards.remove(0);
                 System.out.println("Поздравляем! Вы получили " + playersCard);
                 while (!allRight) {
+                    EvolutionCards card;
                     switch (playersCard) {
-                        case "church", "library", "poly", "funfair", "embassy" -> allRight = all.main(player);
-                        case "forward1" -> allRight = one.main(player);
-                        case "forward2" -> allRight = two.main(player);
-                        case "map" -> allRight = map.main(player);
-                        case "knight" -> allRight = knight.main(player);
+                        case "church", "library", "poly", "funfair", "embassy" -> card = new Evo_All(m, player);
+                        case "forward1" -> card = new Evo_Forward1(m, player);
+                        case "forward2" -> card = new Evo_Forward2(m, player);
+                        case "map" -> card = new Evo_Map(m, player);
+                        case "knight" -> card = new Evo_Knight(m, player);
+                        default -> card = new EvolutionCards(m, player);
                     }
+                    allRight = card.action();
                 }
             } else System.out.println("У вас недостаточно ресурсов");
         }
