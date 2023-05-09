@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Controller.GreetingWindow;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,6 @@ public class Game extends Canvas implements Runnable {
     public static double percent = WIDTH/1920.00;
     public int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
     public void run() {
-        GreetingWindow.init();
         if (GreetingWindow.isPerformed) {
             Pole.init();
             while (running) {
@@ -52,6 +53,7 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setVisible(true);
         game.start();
+
     }
     public void start() {
         running = true;

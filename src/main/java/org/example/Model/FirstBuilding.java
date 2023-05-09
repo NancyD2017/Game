@@ -5,12 +5,13 @@ import static java.lang.System.out;
 import static org.example.Model.Model.playerList;
 
 class FirstBuilding {
-    int main(Integer player, Color mcolor)  {                             //осуществляет постройку первого поселения и дорожки игрока
+    public static String addText = "";
+    int main(Integer player, Colors mcolor)  {                             //осуществляет постройку первого поселения и дорожки игрока
         Model m = new Model();
         Resources e = new Resources();
         CoordinatesCheck o = new CoordinatesCheck();
         PossiblePorts p = new PossiblePorts();
-        out.println("Выберите положение поселения на поле. посмотрите на выведенное поле выше и выберите ряд (от 1 до 11) и столбец (от 1 до 4 или больше, в зависимости от ряда)");
+        out.println(addText + "Выберите положение поселения на поле. посмотрите на выведенное поле выше и выберите ряд (от 1 до 11) и столбец (от 1 до 4 или больше, в зависимости от ряда)");
         int row = m.isNumber() - 1;
         int column = m.isNumber() - 1;
         if (o.act(row, column)) {

@@ -1,13 +1,16 @@
 package org.example.Model;
+import org.example.Controller.StringCatcher;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-class EvolutionCards {
+public class EvolutionCards {
     boolean action() {
         return true;
     }
     Model model;
-    Player player;
+    public static Player player;
+    StringCatcher catcher = new StringCatcher();
     EvolutionCards(Model model, Player player) {
         this.model = model;
         this.player = player;
@@ -21,10 +24,10 @@ class EvolutionCards {
                         player.cards.remove(ch);
                     }
                 }
-                String playersCard = Model.evolutionCards.get(0);
+                //String playersCard = Model.evolutionCards.get(0);
+                String playersCard = "forward1";
                 boolean allRight = false;
                 Model.evolutionCards.remove(0);
-                System.out.println("Поздравляем! Вы получили " + playersCard);
                 while (!allRight) {
                     EvolutionCards card;
                     switch (playersCard) {
@@ -37,6 +40,6 @@ class EvolutionCards {
                     }
                     allRight = card.action();
                 }
-            } else System.out.println("У вас недостаточно ресурсов");
+            } else catcher.makeMessage("You don't have enough resources","");
         }
 }

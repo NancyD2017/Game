@@ -1,5 +1,8 @@
 package org.example.Model;
 
+import org.example.Controller.Buttons_Build;
+import org.example.Controller.StringCatcher;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,16 +10,19 @@ import java.util.List;
 import static java.lang.System.out;
 
 class Build {
+    StringCatcher catcher = new StringCatcher();
     int act(Player player, ArrayList<Character> hexes) {                                                                            //строит поселение, город или дорожку при наступлении хада игрока
-        out.println("Что вы хотите построить?\nЕсли дорожку - введите R\nпоселение - t\nгород - c\n");
+        catcher.makeMessage("What do you wanna build?","Buttons_Build");
         Model m = new Model();
         Road r = new Road();
         Resources e = new Resources();
         CoordinatesCheck o = new CoordinatesCheck();
-        String someBuilding = m.in.next();
+        String someBuilding = null;
+        while (someBuilding == null || someBuilding.isEmpty()) someBuilding = (String) catcher.getData("org.example.Controller.Buttons_Build");
+        Buttons_Build.messageToPass = null;
         boolean allRight = false;
         switch (someBuilding) {
-            case "R" -> {
+            case "Road" -> {
                 if (player.roads > 0) {
                     List<Character> toRemove = new ArrayList<>(List.of('b', 'w'));
                     if (new HashSet<>(player.cards).containsAll(toRemove)) {
@@ -26,12 +32,12 @@ class Build {
                         }
                     } else {
                         allRight = true;
-                        out.println("У вас недостаточно ресурсов");
+                        catcher.makeMessage("You don't have enough resources", "Removal");
                     }
-                } else out.println("У вас закончились дорожки");
+                } catcher.makeMessage("You don't have enough roads", "Removal");
                 if (player.roads < Model.leastRoadsLeft) Model.leastRoadsLeft = player.roads;
             }
-            case "t" -> {
+            case "Town" -> {
                 if (player.towns > 0) {
                     if (new HashSet<>(player.cards).containsAll(List.of('b', 'w', 's', 'f'))) {
                         out.println("Введите расположение поселения около дорожек ");
@@ -59,15 +65,15 @@ class Build {
                         }
                     } else {
                         allRight = true;
-                        out.println("У вас недостаточно ресурсов");
+                        catcher.makeMessage("You don't have enough resources", "Removal");
                     }
                 } else {
-                    out.println("У вас закончились поселения");
+                    catcher.makeMessage("You don't have enough towns", "Removal");
                     allRight = true;
                 }
-                if (!allRight) out.println("Неверные координаты. Попробуйте еще раз");
+                if (!allRight) catcher.makeMessage("Wrong coordinates. Try one more time", "Removal");
             }
-            case "c" -> {
+            case "City" -> {
                 if (player.cities > 0) {
                     if (countOccurrences(player.cards, 's') >= 2 && countOccurrences(player.cards, 't') >= 3) {
                         out.println("Введите расположение города на месте поселения ");
@@ -94,20 +100,19 @@ class Build {
                                 }
                             player.available.remove(toDelete);
                         } else {
-                            out.println("Попробуйте еще раз");
+                            catcher.makeMessage("Try one more time", "Removal");
                             return (1);
                         }
                     } else {
                         allRight = true;
-                        out.println("У вас недостаточно ресурсов");
+                        catcher.makeMessage("You don't have enough resources", "Removal");
                     }
                 } else {
-                    out.println("У вас закончились дорожки");
+                    catcher.makeMessage("You don't have enough cities", "Removal");
                     allRight = true;
                 }
-                if (!allRight) out.println("Неверные координаты. Попробуйте еще раз");
+                if (!allRight) catcher.makeMessage("Wrong coordinates. Try one more time", "Removal");
             }
-            default -> out.println("Невозможно построить " + someBuilding + ". Попробуйте еще раз");
         }
         if (!allRight) return 1;
         else return 0;

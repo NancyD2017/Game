@@ -3,7 +3,7 @@ package org.example.Model;
 import java.util.*;
 
 class Player {
-    Color color;
+    Colors color;
     Set<FieldItem> available = new HashSet<>();                                                                        //показывает расположение фигурок этого игрока в формате: ряд, столбец, название
     List<Character> cards = new ArrayList<>();                                                                      //карточки ресурсов для каждого игрока, с помощью которых можно что-то купить, обменять
     Integer points = 0;

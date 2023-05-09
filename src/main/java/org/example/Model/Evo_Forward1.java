@@ -1,19 +1,21 @@
 package org.example.Model;
 
-class Evo_Forward1 extends EvolutionCards{
-    Evo_Forward1(Model model, Player player){
-        super(model,player);
+import org.example.Controller.StringCatcher;
+
+class Evo_Forward1 extends EvolutionCards {
+    Evo_Forward1(Model model, Player player) {
+        super(model, player);
     }
+
     @Override
     boolean action() {
-        System.out.println("Можете выбрать 2 любые карты ресурсов. Введите их без пробелов: ");
-        String iReceive = model.in.next();
-        String[] ir = iReceive.split("");
-        if (model.checkInsExchange(ir) && ir.length == 2) {
-            for (String item : ir) player.cards.add(item.charAt(0));
-            System.out.println("Ваши ресурсы: " + player.cards);
-            return true;
-        } else System.out.println("Вы ввели карты ресурсов неправильно");
-        return false;
+        StringCatcher catcher = new StringCatcher();
+        catcher.makeMessage("You can choose 2 any cards of resources", "Buttons_Forward1");
+        String iReceive = null;
+        while (iReceive == null || iReceive.isEmpty()) iReceive = (String) catcher.getData("org.example.Controller.Buttons_Forward1");
+        String[] ir = iReceive.split(" ");
+        for (String item : ir) player.cards.add(item.charAt(0));
+        catcher.showData("Your new resources", player.cards);
+        return true;
     }
 }

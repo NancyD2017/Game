@@ -1,13 +1,17 @@
 package org.example.Model;
 
+import org.example.Controller.Buttons_Colors;
+import org.example.Controller.Buttons_Turns;
+import org.example.Controller.StringCatcher;
+
 import java.util.*;
 import java.util.List;
 
 
 import static java.lang.System.out;
 
-public class Model<players> {
-    static Integer players;
+public class Model {
+    public static Integer players;
     Scanner in = new Scanner(System.in);
     static public ArrayList<Character> hexes = new ArrayList<>();
     static Item[][] field = {
@@ -23,19 +27,19 @@ public class Model<players> {
             {Item.r, Item.r, Item.r, Item.r},
             {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O}
     };
-    static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
+    public static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
     static ArrayList<String> evolutionCards = new ArrayList<>();                                                        //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
     static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
     static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
     static Player mostKnightsHolder = playerList.get(0);
     static int leastRoadsLeft = 13;
     static Player leastRoadsLeftHolder = playerList.get(0);
+    public static List<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
     static Player mostPointsHolder = playerList.get(0);
-    static List<Color> colors = new ArrayList<>(Arrays.asList(Color.values()));
     FirstBuilding f = new FirstBuilding();
     ExchangeWithPlayer p = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
-    //StringCatcher catcher = new StringCatcher();//!добавить вместо out.println catcher.get
+    StringCatcher catcher = new StringCatcher();
     Build b = new Build();
     public void main() {
         hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
@@ -48,40 +52,35 @@ public class Model<players> {
             }
             description.get(values.get(i)).add(hexes.get(i));
         }
+        playerList.get(0).cards.add('s');
+        playerList.get(0).cards.add('f');
+        playerList.get(0).cards.add('t');
         evolutionCards.addAll(List.of("church", "embassy", "funfair", "library", "poly"));
         evolutionCards.addAll(Collections.nCopies(20, "knight"));
         evolutionCards.addAll(Collections.nCopies(3, "map"));
         evolutionCards.addAll(Collections.nCopies(3, "forward1"));
         evolutionCards.addAll(Collections.nCopies(3, "forward2"));
         Collections.shuffle(evolutionCards);                                                                                                 //добавляет нужное количество карточек развития
-        out.println("Введите количество игроков от 2 до 4:");
-        players = isNumber();
-        if (!(players >= 2 && players <= 4)) {
-            out.println("Количество игроков - число от 2 до 4. Попробуйте еще раз");
-            players = isNumber();
-        }
+        catcher.makeMessage("Welcome to the game Catan: colonists!<br>Choose the number<br> of players between 2 and 4:", "GreetingWindow");
+        while (players == null) players = (Integer) catcher.getData("org.example.Controller.GreetingWindow");
         polePrinting();
-        for (int i = 0; i < players; i++) {
-            out.println("Выберите цвет фишек для игрока " + (i + 1) + " из возможных: " + colors);
-            String choice = in.next();
-            try {
-                Color mcolor = Color.valueOf(choice);
-                playerList.get(i).color = mcolor;
-                i -= f.main(i, mcolor);
-            } catch (IllegalArgumentException e) {
-                out.println("Попробуйте еще раз");
-                i -= 1;
-            }
+        for (int i = 0; i < players ; i++) {
+            String choice = null;
+            catcher.makeMessage("Choose the color of dibs <br> for player " + (i + 1) + " from possible ", "Buttons_Colors");
+            while (choice == null || choice.isEmpty()) choice = (String) catcher.getData("org.example.Controller.Buttons_Colors");
+            Buttons_Colors.messageToPass = null;
+            i -= f.main(i, Colors.valueOf(choice));
         }
         polePrinting();
         for (int i = players; i > 0; i--) {
-            out.println("\nигрок " + i + ", ваш ход. Постройте еще 1 поселение и дорожку");
-            i += f.main(i - 1, playerList.get(i).color);
+            FirstBuilding.addText = ("<br> player " + i + ", it's your turn. Build one more town and road<b>");
+            i += f.main(i - 1, playerList.get(i - 1).color);
         }
         polePrinting();
         gameProcess();
     }
     void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
+        StringCatcher catcher2 = new StringCatcher();
         while (mostPoints < 10) {
             boolean retakeTurn = false;
             for (int k = 0; k < players; k++) {
@@ -91,7 +90,6 @@ public class Model<players> {
                     while (!((cubesNumber >= 2 && cubesNumber <= 12))) {
                         cubesNumber = random.nextInt(11) + 2;
                     }
-                    out.println("Выпало число " + cubesNumber);
                     for (int pointsForPlayer = 0; pointsForPlayer < players; pointsForPlayer++) {
                         List<Character> elementsToReceive = playerList.get(pointsForPlayer).element.get(cubesNumber);
                         if (elementsToReceive != null) playerList.get(pointsForPlayer).cards.addAll(elementsToReceive);
@@ -119,14 +117,11 @@ public class Model<players> {
                     retakeTurn = false;
                 }
             }
-            out.println("Конфигурация поля на данный момент:");
-            polePrinting();
-            out.println("Больше всего очков у игрока " + (playerList.indexOf(mostPointsHolder) + 1) + ": " + mostPoints);
-            out.println("Больше всего рыцарей у игрока " + (playerList.indexOf(mostKnightsHolder) + 1) + ": " + mostKnights);
-            out.println("Больше всего дорог у игрока " + (playerList.indexOf(leastRoadsLeftHolder) + 1) + ": " + (15 - leastRoadsLeft));
+            catcher2.makeMessage("Most points holder is player " + (playerList.indexOf(mostPointsHolder) + 1) + ": " + mostPoints +
+            "<br>Most knights holder is player " + (playerList.indexOf(mostKnightsHolder) + 1) + ": " + mostKnights +
+            "<br>Most roads holder is player " + (playerList.indexOf(leastRoadsLeftHolder) + 1) + ": " + (15 - leastRoadsLeft),"Removal");
         }
-        out.println("Поздравляю победителя!");
-        out.println("Больше всего очков набрал: " + playerList.indexOf(mostPointsHolder));
+        catcher2.makeMessage("Congratulates to winner!<br>and the winner is...<br><br> " + playerList.indexOf(mostPointsHolder) + "!", "Default");
     }
     void polePrinting() {                                                                                 //печатает поле для удобства игроков
         int spaces = 8;
@@ -164,10 +159,12 @@ public class Model<players> {
     }
     Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
+        catcher.makeMessage("Player " + (l + 1) + ", it's your turn. these are your resources:<br> " + player.cards +
+                "<br>Choose your next action", "Turn");
         while (!allRight) {
-            out.println(" игрок " + (l + 1) + ", ваш ход. Вот ваши ресурсы " + player.cards);
-            out.println("Если хотите что-то построить, введите 1\nобменяться с портом - 2\nобменяться с соперником - 3\nкупить карточку развития - 4\nЧтобы пропустить ход - 0");
-            int action = isNumber();
+            Integer action = null;
+            while (action == null) action = (Integer) catcher.getData("org.example.Controller.Buttons_Turns");
+            Buttons_Turns.messageToPass = null;
             switch (action) {
                 case 1 -> {
                     allRight = true;
@@ -185,8 +182,7 @@ public class Model<players> {
                     allRight = true;
                     new EvolutionCards(new Model(), player).main(player);
                 }
-                case 0 -> allRight = true;
-                default -> out.println("Вы ввели не то действие. Попробуйте еще раз");
+                case 5 -> allRight = true;
             }
         }
         return l;
