@@ -38,47 +38,29 @@ public class Buttons extends JPanel implements ActionListener {
         Buttons buttons;
         name = className;
         switch (className) {
-            case "GreetingWindow" -> {
-                buttons = new GreetingWindow(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-            }
-            case "Buttons_Colors" -> {
-                buttons = new Buttons_Colors(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-            }
-            case "Turn" -> {
-                buttons = new Buttons_Turns(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-            }
-            case "Buttons_Build" -> {
-                buttons = new Buttons_Build(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-            }
-            case "Buttons_Forward1" -> {
-                buttons = new Buttons_Forward1(label);
-                buttons.setPreferredSize(new Dimension(1000, 750));
-            }
-            case "Buttons_Forward2" -> {
-                buttons = new Buttons_Forward2(label);
-                buttons.setPreferredSize(new Dimension(1000, 750));
-            }
-            case "Buttons_Knight" -> {
-                buttons = new Buttons_Knight(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-            }
+            case "GreetingWindow" -> buttons = new GreetingWindow(label);
+            case "Buttons_Colors" -> buttons = new Buttons_Colors(label);
+            case "Turn" -> buttons = new Buttons_Turns(label);
+            case "Buttons_Build" -> buttons = new Buttons_Build(label);
+            case "Buttons_Forward1" -> buttons = new Buttons_Forward1(label);
+            case "Buttons_Forward2" -> buttons = new Buttons_Forward2(label);
+            case "Buttons_Knight" -> buttons = new Buttons_Knight(label);
+            case "Buttons_EPlayer" -> buttons = new Buttons_EPlayer(label);
+            case "Buttons_ExchangePlayer" -> buttons = new Buttons_ExchangePlayer(label);
+            case "Buttons_ExchangePl" -> buttons = new Buttons_ExchangePl(label);
+            case "Buttons_ExchangeValidation" -> buttons = new Buttons_ExchangeValidation(label);
+            case "Buttons_4ExchangePort" -> buttons = new Buttons_4ExchangePort(label);
+            case "Buttons_4Exchange" -> buttons = new Buttons_4Exchange(label);
+            case "Buttons_ExchangePort" -> buttons = new Buttons_ExchangePort(label);
             default -> {
                 buttons = new Buttons(label);
-                buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
-                Timer timer = new Timer(7000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        frame.dispose();
-                    }
-                });
+                Timer timer = new Timer(7000, e -> frame.dispose());
                 timer.setRepeats(false);
                 timer.start();
             }
         }
+        if (className.equals("Buttons_Forward1") || className.equals("Buttons_Forward2")) buttons.setPreferredSize(new Dimension(1000, 750));
+        else buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
         frame.setContentPane(buttons);
         frame.setResizable(false);
         frame.pack();

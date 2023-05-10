@@ -1,26 +1,36 @@
 package org.example.Model;
 
+import org.example.Controller.List_Locations;
+import org.example.Controller.StringCatcher;
+
 import java.util.HashSet;
 import java.util.Set;
 
 class Road {
     boolean main(Player player) {
-        Model m = new Model();
-        CoordinatesCheck c = new CoordinatesCheck();
+        StringCatcher catcher = new StringCatcher();
         PossiblePorts p = new PossiblePorts();
         boolean allRight = false;
-        System.out.println("Введите расположение дорожки около города, поселения или другой дорожки ");
-        int rowR = m.isNumber() - 1;
-        int columnR = m.isNumber() - 1;
+        List_Locations locations = new List_Locations("Choose row and column of your road:");
+        Integer columnR = null;
+        while (columnR == null) {
+            try {
+                columnR = Integer.parseInt(locations.selectedColumn) - 1;
+            } catch (Exception e) {
+            }
+        }
+        Integer rowR = null;
+        while (rowR == null) {
+            rowR = Integer.parseInt(locations.selectedRow) - 1;
+        }
         Set<FieldItem> toAdd = new HashSet<>();
         Set<FieldItem> playersArsenal = player.available;
-        if (c.act(rowR, columnR)) {
             for (FieldItem t : playersArsenal) {
                 if ((Model.field[rowR][columnR] == Item.r) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
                         ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 - 1 == columnR) && (t.ro <= 5) && (t.ro == 1 + rowR)) ||
                         ((t.col * 4 - 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 + 3 == columnR) && (t.ro <= 3) && (t.ro + 1 == rowR)) ||
                         ((t.col * 4 + 3 == columnR) && (t.ro >= 7) && (t.ro == rowR + 1)) || ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro == rowR + 1)) ||
-                        ((t.col == columnR + 2 && t.ro == rowR) || (t.col == columnR - 2 && t.ro == rowR) && rowR % 2 == 0) ||
+                        ((t.col == columnR + 2 && t.ro.equals(rowR)) || (t.col == columnR - 2 && t.ro.equals(rowR)) && rowR % 2 == 0) ||
                         ((columnR * 4 + 1 == t.col) && (rowR <= 5) && (rowR == t.ro + 1)) || ((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro + 1 == rowR)) ||
                         ((columnR * 4 + 1 == t.col) && (rowR >= 5) && (rowR + 1 == t.ro)) || ((columnR * 4 - 1 == t.col) && (rowR <= 5) && (rowR == 1 + t.ro)) ||
                         ((columnR * 4 - 1 == t.col) && (rowR >= 5) && (rowR + 1 == t.ro)) || ((columnR * 4 + 3 == t.col) && (rowR <= 3) && (rowR + 1 == t.ro)) ||
@@ -33,13 +43,12 @@ class Road {
                     Model.field[rowR][columnR] = Item.R;
                     p.act(rowR, columnR, player);
                     allRight = true;
-                    System.out.println("Дорожка построена!");
+                    catcher.makeMessage("The road has been built!","");
                 }
             } if (!allRight){
-                System.out.println("Неправильные координаты дорожки. Попробуйте еще раз");
+                catcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
                 return false;
             }
-        } else System.out.println("Попробуйте еще раз");
         player.available.addAll(toAdd);
         return allRight;
     }

@@ -1,52 +1,62 @@
 package org.example.Model;
+import org.example.Controller.List_Locations;
+import org.example.Controller.StringCatcher;
+
 import java.util.List;
 
-import static java.lang.System.out;
 import static org.example.Model.Model.playerList;
 
 class FirstBuilding {
     public static String addText = "";
     int main(Integer player, Colors mcolor)  {                             //осуществляет постройку первого поселения и дорожки игрока
-        Model m = new Model();
+        StringCatcher catcher = new StringCatcher();
         Resources e = new Resources();
-        CoordinatesCheck o = new CoordinatesCheck();
         PossiblePorts p = new PossiblePorts();
-        out.println(addText + "Выберите положение поселения на поле. посмотрите на выведенное поле выше и выберите ряд (от 1 до 11) и столбец (от 1 до 4 или больше, в зависимости от ряда)");
-        int row = m.isNumber() - 1;
-        int column = m.isNumber() - 1;
-        if (o.act(row, column)) {
+        List_Locations locations;
+        locations = new List_Locations(addText + "Choose the location of town");
+        Integer column = null;
+        while (column == null) {
+            try {
+                column = Integer.parseInt(locations.selectedColumn) - 1;
+            } catch (Exception ignored) {
+            }
+        }
+        Integer row = null;
+        while (row == null) {
+            row = Integer.parseInt(locations.selectedRow) - 1;
+        }
             if (Model.field[row][column] == Item.O) {
                 playerList.get(player).available.add(new FieldItem(row, column, Item.T));
                 Model.field[row][column] = Item.T;
                 for (int j = 0; j < 1; j++) {
-                    out.println("и расположение дорожки около него ");
-                    int rowR = m.isNumber() - 1;
-                    int columnR = m.isNumber() - 1;
-                    if (o.act(rowR, columnR)) {
-                        if ((Model.field[rowR][columnR] == Item.r && ((rowR == row && ((columnR == column - 1) || (columnR == column + 1))) ||
+                    locations = new List_Locations("choose location of road near town    ");
+                    Integer columnR = null;
+                    while (columnR == null) {
+                        try {
+                            columnR = Integer.parseInt(locations.selectedColumn) - 1;
+                        } catch (Exception ignored) {
+                        }
+                    }
+                    Integer rowR = null;
+                    while (rowR == null) {
+                        rowR = Integer.parseInt(locations.selectedRow) - 1;
+                    }
+                        if (Model.field[rowR][columnR] == Item.r && ((rowR.equals(row) && ((columnR == column - 1) || (columnR == column + 1))) ||
                                 ((((row == 6 || row == 4) && rowR == 5) || (row < 4 && rowR == 1 + row) || (row > 6 && rowR + 1 == row)) && columnR * 4 == column) ||
-                                (row <= 4 && columnR * 4 + 2 == column && rowR + 1 == row) || (row >= 6 && columnR * 4 + 2 == column && rowR == 1 + row))) && o.act(row, column)) {
+                                (row <= 4 && columnR * 4 + 2 == column && rowR + 1 == row) || (row >= 6 && columnR * 4 + 2 == column && rowR == 1 + row))) {
                             playerList.get(player).available.add(new FieldItem(rowR, columnR, Item.R));
                             Model.field[rowR][columnR] = Item.R;
                             p.act(rowR, columnR, playerList.get(player));
                             Model.colors.remove(mcolor);
                         } else {
-                            out.println("Попробуйте еще раз");
+                            catcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
                             j -= 1;
                         }
-                    } else {
-                        out.println("Попробуйте еще раз");
-                        j -= 1;
-                    }
                 }
             } else {
-                out.println("Попробуйте еще раз");
+                catcher.makeMessage("Try one more time","");
                 return 1;
             }
-        } else {
-            out.println("Попробуйте еще раз");
-            return 1;
-        }
         playerList.get(player).points += 1;
         playerList.get(player).roads -= 1;
         playerList.get(player).towns -= 1;

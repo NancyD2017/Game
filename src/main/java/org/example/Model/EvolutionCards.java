@@ -24,8 +24,7 @@ public class EvolutionCards {
                         player.cards.remove(ch);
                     }
                 }
-                //String playersCard = Model.evolutionCards.get(0);
-                String playersCard = "forward1";
+                String playersCard = Model.evolutionCards.get(0);
                 boolean allRight = false;
                 Model.evolutionCards.remove(0);
                 while (!allRight) {

@@ -17,14 +17,11 @@ public class Game extends Canvas implements Runnable {
     public static double percent = WIDTH/1920.00;
     public int x = (int) ((WIDTH - ((getSprite("pole.png").getWidth()) * percent))/2);
     public void run() {
-        if (GreetingWindow.isPerformed) {
             Pole.init();
             while (running) {
                 render();
             }
-        }
     }
-
     public void render(){
                BufferStrategy bs = getBufferStrategy();
                if (bs == null) {
@@ -42,7 +39,7 @@ public class Game extends Canvas implements Runnable {
     }
     public void init(){
     }
-    public static void main(String[] args) {
+    public void main() {
         Game game = new Game();
         game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         JFrame frame = new JFrame("Catan");
@@ -53,7 +50,6 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false);
         frame.setVisible(true);
         game.start();
-
     }
     public void start() {
         running = true;

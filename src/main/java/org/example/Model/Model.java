@@ -3,7 +3,9 @@ package org.example.Model;
 import org.example.Controller.Buttons_Colors;
 import org.example.Controller.Buttons_Turns;
 import org.example.Controller.StringCatcher;
+import org.example.Game;
 
+import javax.swing.Timer;
 import java.util.*;
 import java.util.List;
 
@@ -12,7 +14,6 @@ import static java.lang.System.out;
 
 public class Model {
     public static Integer players;
-    Scanner in = new Scanner(System.in);
     static public ArrayList<Character> hexes = new ArrayList<>();
     static Item[][] field = {
             {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
@@ -52,9 +53,6 @@ public class Model {
             }
             description.get(values.get(i)).add(hexes.get(i));
         }
-        playerList.get(0).cards.add('s');
-        playerList.get(0).cards.add('f');
-        playerList.get(0).cards.add('t');
         evolutionCards.addAll(List.of("church", "embassy", "funfair", "library", "poly"));
         evolutionCards.addAll(Collections.nCopies(20, "knight"));
         evolutionCards.addAll(Collections.nCopies(3, "map"));
@@ -63,7 +61,8 @@ public class Model {
         Collections.shuffle(evolutionCards);                                                                                                 //добавляет нужное количество карточек развития
         catcher.makeMessage("Welcome to the game Catan: colonists!<br>Choose the number<br> of players between 2 and 4:", "GreetingWindow");
         while (players == null) players = (Integer) catcher.getData("org.example.Controller.GreetingWindow");
-        polePrinting();
+        //Game q = new Game();
+        //q.main();
         for (int i = 0; i < players ; i++) {
             String choice = null;
             catcher.makeMessage("Choose the color of dibs <br> for player " + (i + 1) + " from possible ", "Buttons_Colors");
@@ -71,12 +70,12 @@ public class Model {
             Buttons_Colors.messageToPass = null;
             i -= f.main(i, Colors.valueOf(choice));
         }
-        polePrinting();
         for (int i = players; i > 0; i--) {
-            FirstBuilding.addText = ("<br> player " + i + ", it's your turn. Build one more town and road<b>");
+            FirstBuilding.addText = (" player " + i + """
+                    it's your turn.
+                    Build one more town and road""");
             i += f.main(i - 1, playerList.get(i - 1).color);
         }
-        polePrinting();
         gameProcess();
     }
     void gameProcess() {                                                                                  //осушествляет ходы игроков, броски кубиков и определение победителей
@@ -123,40 +122,6 @@ public class Model {
         }
         catcher2.makeMessage("Congratulates to winner!<br>and the winner is...<br><br> " + playerList.indexOf(mostPointsHolder) + "!", "Default");
     }
-    void polePrinting() {                                                                                 //печатает поле для удобства игроков
-        int spaces = 8;
-        for (int row = 0; row < 11; row++) {
-            out.print(" ".repeat(spaces));
-            for (int column = 0; column < field[row].length; column++) {
-                if (row % 2 == 0) out.print(field[row][column] + " ");
-                else out.print(field[row][column] + "       ");
-            }
-            out.println();
-            if (row < 5 && row % 2 == 1) spaces -= 4;
-            else if (row % 2 == 0 && row > 5) spaces += 4;
-        }
-    }
-    int isNumber() {                                                                                      //устраняет ошибки, когда пользователь ввел не число
-        boolean isOk = false;
-        int number = 0;
-        while (!isOk) {
-            if (in.hasNextInt()) {
-                number = in.nextInt();
-                isOk = true;
-            } else {
-                out.println("Некорректный ввод. Попробуйте еще раз:");
-                in.next();
-            }
-        }
-        return number;
-    }
-    boolean checkInsExchange(String[] input) {                                                            //так как ресурсы при обмене должны быть введены верно, я ввела обозначения и добавила эту функцию
-        for (String item : input) {                                                                                     //b - кирпич, w - дерево, t - камень, s - сено, f - овцы,
-            if (!(item.equals("b") || item.equals("w") || item.equals("t") || item.equals("s") || item.equals("f")))
-                return false;
-        }
-        return true;
-    }
     Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
         catcher.makeMessage("Player " + (l + 1) + ", it's your turn. these are your resources:<br> " + player.cards +
@@ -168,7 +133,7 @@ public class Model {
             switch (action) {
                 case 1 -> {
                     allRight = true;
-                    l -= b.act(player, hexes);
+                    l -= b.act(player);
                 }
                 case 2 -> {
                     allRight = true;

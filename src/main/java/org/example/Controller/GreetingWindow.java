@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 public class GreetingWindow extends Buttons implements ActionListener{
     protected JButton b1,b2,b3;
     public static Object messageToPass;
-    public static boolean isPerformed = true;
     public GreetingWindow(JLabel label) {
         super(label);
         main();
