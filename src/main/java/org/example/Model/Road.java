@@ -2,6 +2,7 @@ package org.example.Model;
 
 import org.example.Controller.List_Locations;
 import org.example.Controller.StringCatcher;
+import org.example.Pole;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,7 @@ class Road {
                     Model.field[rowR][columnR] = Item.R;
                     p.act(rowR, columnR, player);
                     allRight = true;
-                    catcher.makeMessage("The road has been built!","");
+                    catcher.passGraphics(rowR, columnR, player.color, "road");
                 }
             } if (!allRight){
                 catcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");

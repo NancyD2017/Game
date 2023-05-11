@@ -17,7 +17,6 @@ class Evo_Forward1 extends EvolutionCards {
         Buttons_Forward1.messageToPass = null;
         String[] ir = iReceive.split(" ");
         for (String item : ir) player.cards.add(item.charAt(0));
-        catcher.showData("Your new resources", player.cards);
         return true;
     }
 }

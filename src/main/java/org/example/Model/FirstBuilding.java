@@ -27,6 +27,7 @@ class FirstBuilding {
         }
             if (Model.field[row][column] == Item.O) {
                 playerList.get(player).available.add(new FieldItem(row, column, Item.T));
+                catcher.passGraphics(row, column, mcolor, "town");
                 Model.field[row][column] = Item.T;
                 for (int j = 0; j < 1; j++) {
                     locations = new List_Locations("choose location of road near town    ");
@@ -48,6 +49,7 @@ class FirstBuilding {
                             Model.field[rowR][columnR] = Item.R;
                             p.act(rowR, columnR, playerList.get(player));
                             Model.colors.remove(mcolor);
+                            catcher.passGraphics(rowR, columnR, mcolor, "road");
                         } else {
                             catcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
                             j -= 1;

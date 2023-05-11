@@ -14,7 +14,6 @@ public class Buttons_Knight extends Buttons implements ActionListener {
     public static boolean isPerformed = true;
     public Buttons_Knight(JLabel label) {
         super(label);
-        add(label, BoxLayout.X_AXIS);
         main();
     }
     @Override

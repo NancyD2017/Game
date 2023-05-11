@@ -211,6 +211,6 @@ class Resources {
     }
     static void addResource(Player player, int element, int hexIndex) {
         player.element.put(element, new ArrayList<>());
-        player.element.get(element).add(hexes.get(hexIndex + 1));
+        player.element.get(element).add(hexes.get(hexIndex));
     }
 }

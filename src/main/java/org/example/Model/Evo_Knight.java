@@ -13,7 +13,6 @@ class Evo_Knight extends EvolutionCards{
         while (victim == null) victim = (Integer) catcher.getData("org.example.Controller.Buttons_Knight");
         Player nameVictim = Model.playerList.get(victim - 1);
         player.cards.add(nameVictim.cards.get(0));
-        catcher.showData("Your new list of resources:", player.cards);
         nameVictim.cards.remove(0);
         player.knights += 1;
         if (player.knights > Model.mostKnights) {

@@ -4,7 +4,7 @@ public enum Colors {
     Blue("Blue"),
     Orange("Orange"),
     Red("Red"),
-    White("White");
+    Gray("Grey");
     private final String value;
 
     Colors(String value) {

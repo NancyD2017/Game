@@ -16,7 +16,7 @@ class Evo_Map extends EvolutionCards{
             player.roads -= 2;
             if (player.roads < Model.leastRoadsLeft) Model.leastRoadsLeft = player.roads;
         } else {
-            catcher.makeMessage("You have no roads left", "Default");
+            catcher.makeMessage("You have no roads left", "");
         }
         return true;
     }

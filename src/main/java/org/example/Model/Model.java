@@ -41,6 +41,7 @@ public class Model {
     ExchangeWithPlayer p = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
     StringCatcher catcher = new StringCatcher();
+    public static Game q = new Game();
     Build b = new Build();
     public void main() {
         hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
@@ -61,19 +62,16 @@ public class Model {
         Collections.shuffle(evolutionCards);                                                                                                 //добавляет нужное количество карточек развития
         catcher.makeMessage("Welcome to the game Catan: colonists!<br>Choose the number<br> of players between 2 and 4:", "GreetingWindow");
         while (players == null) players = (Integer) catcher.getData("org.example.Controller.GreetingWindow");
-        //Game q = new Game();
-        //q.main();
+        q.main();
         for (int i = 0; i < players ; i++) {
             String choice = null;
-            catcher.makeMessage("Choose the color of dibs <br> for player " + (i + 1) + " from possible ", "Buttons_Colors");
+            catcher.makeMessage("Choose the color of dibs for player " + (i + 1) + " from possible ", "Buttons_Colors");
             while (choice == null || choice.isEmpty()) choice = (String) catcher.getData("org.example.Controller.Buttons_Colors");
             Buttons_Colors.messageToPass = null;
             i -= f.main(i, Colors.valueOf(choice));
         }
         for (int i = players; i > 0; i--) {
-            FirstBuilding.addText = (" player " + i + """
-                    it's your turn.
-                    Build one more town and road""");
+            FirstBuilding.addText = (" player " + i + " it's your turn. Build one more town and road");
             i += f.main(i - 1, playerList.get(i - 1).color);
         }
         gameProcess();
@@ -89,6 +87,7 @@ public class Model {
                     while (!((cubesNumber >= 2 && cubesNumber <= 12))) {
                         cubesNumber = random.nextInt(11) + 2;
                     }
+
                     for (int pointsForPlayer = 0; pointsForPlayer < players; pointsForPlayer++) {
                         List<Character> elementsToReceive = playerList.get(pointsForPlayer).element.get(cubesNumber);
                         if (elementsToReceive != null) playerList.get(pointsForPlayer).cards.addAll(elementsToReceive);
@@ -124,8 +123,7 @@ public class Model {
     }
     Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
-        catcher.makeMessage("Player " + (l + 1) + ", it's your turn. these are your resources:<br> " + player.cards +
-                "<br>Choose your next action", "Turn");
+        catcher.makeMessage("Player " + (l + 1) + ", it's your turn.Choose your next action", "Turn");
         while (!allRight) {
             Integer action = null;
             while (action == null) action = (Integer) catcher.getData("org.example.Controller.Buttons_Turns");

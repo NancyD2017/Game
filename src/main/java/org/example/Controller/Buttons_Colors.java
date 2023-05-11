@@ -14,7 +14,6 @@ public class Buttons_Colors extends Buttons implements ActionListener {
     public static boolean isPerformed = true;
     public Buttons_Colors(JLabel label) {
         super(label);
-        add(label, BoxLayout.X_AXIS);
         main();
     }
     @Override
@@ -38,9 +37,9 @@ public class Buttons_Colors extends Buttons implements ActionListener {
         b2.setActionCommand("Blue");
 
         b3 = new JButton("            ");
-        b3.setBackground(Color.WHITE);
+        b3.setBackground(Color.GRAY);
         b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b3.setActionCommand("White");
+        b3.setActionCommand("Gray");
 
         b4 = new JButton("            ");
         b4.setBackground(Color.ORANGE);
@@ -55,7 +54,7 @@ public class Buttons_Colors extends Buttons implements ActionListener {
         add(Box.createVerticalGlue());
         if (Model.colors.contains(Colors.Red)) add(b1);
         if (Model.colors.contains(Colors.Blue)) add(b2);
-        if (Model.colors.contains(Colors.White)) add(b3);
+        if (Model.colors.contains(Colors.Gray)) add(b3);
         if (Model.colors.contains(Colors.Orange)) add(b4);
     }
 }

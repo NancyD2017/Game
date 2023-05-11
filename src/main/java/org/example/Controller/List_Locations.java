@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JTextArea;
 
 import static org.example.Game.percent;
 
@@ -25,6 +26,7 @@ public class List_Locations extends JFrame implements ActionListener {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.PLAIN, (int) (40 * percent)));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setText(text);
 
         firstComboBox = new JComboBox<>(row);
         firstComboBox.addActionListener(this);

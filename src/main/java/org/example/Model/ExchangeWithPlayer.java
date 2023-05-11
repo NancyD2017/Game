@@ -21,8 +21,8 @@ public class ExchangeWithPlayer {
         Buttons_EPlayer.messageToPass = null;
         boolean isAllRight = false;
         while (!isAllRight) {
-            catcher.makeMessage("List of resources of player " + exchanger + ":<br>" + nameExchanger.cards + "<br>" +
-                    "Choose your resources you'd like to give", "Buttons_ExchangePlayer");
+            catcher.makeMessage("You can see list of resources of player " + exchanger + " on the field" +
+                    "<br>Choose your resources you'd like to give", "Buttons_ExchangePlayer");
             String playerGives = null;
             while (playerGives == null) {
                 playerGives = (String) catcher.getData("org.example.Controller.Buttons_ExchangePlayer");
@@ -74,7 +74,6 @@ public class ExchangeWithPlayer {
                 player.cards.add(it.charAt(0));
                 nameExchanger.cards.remove(Character.valueOf(it.charAt(0)));
             }
-            catcher.showData("Exchange gone well. These are your resources ", player.cards);
         } else catcher.makeMessage("Player " + exchanger + " doesn't wanna exchange", "");
     }
 }

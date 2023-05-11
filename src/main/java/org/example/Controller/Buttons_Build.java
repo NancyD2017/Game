@@ -11,10 +11,10 @@ public class Buttons_Build extends Buttons implements ActionListener{
     public static boolean isPerformed = true;
     public Buttons_Build(JLabel label) {
         super(label);
-        add(label);
         main();
     }
     public void main(){
+        add(label);
         add(Box.createVerticalGlue());
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         b1 = new JButton("Road");

@@ -15,7 +15,6 @@ public class Buttons_EPlayer extends Buttons implements ActionListener {
     public static boolean isPerformed = true;
     public Buttons_EPlayer(JLabel label) {
         super(label);
-        add(label, BoxLayout.X_AXIS);
         main();
     }
     @Override

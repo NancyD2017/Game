@@ -21,7 +21,6 @@ class Evo_Forward2 extends EvolutionCards {
             value.cards.removeAll(Collections.singleton(iReceive.charAt(0)));
         }
         player.cards.addAll(Collections.nCopies(resourcesNumber, ir[0].charAt(0)));
-        catcher.showData("Your resources", player.cards);
         return true;
     }
 }

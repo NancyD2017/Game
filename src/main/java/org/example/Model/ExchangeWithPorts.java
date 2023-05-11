@@ -31,7 +31,6 @@ public class ExchangeWithPorts {
                 }
                 player.cards.add(playerGets.charAt(0));
                 Buttons_4ExchangePort.messageToPass = null;
-                catcher.makeMessage("Exchange gone well<br>" + player.cards, "");
             } else catcher.makeMessage("You don't have enough resources for exchange","");
         } else {
             catcher.makeMessage("Choose any port you'd like to exchange with", "Buttons_ExchangePort");
@@ -50,7 +49,6 @@ public class ExchangeWithPorts {
                 player.cards.remove(Character.valueOf(playerPort.charAt(0)));
                 player.cards.remove(Character.valueOf(playerPort.charAt(0)));
                 player.cards.add(playerReceives.charAt(0));
-                catcher.makeMessage("Exchange gone well", "");
             } else if (playerPort.equals("4")) {
                 if (player.cards.size() >= 4) {
                     useExchange = 4;
@@ -58,7 +56,6 @@ public class ExchangeWithPorts {
                     playerGivesList = getStrings(playerGivesList, 4);
                     for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                     player.cards.add(playerReceives.charAt(0));
-                    catcher.makeMessage("Exchange gone well<br>" + player.cards, "");
                 } else catcher.makeMessage("You don't have enough resources for exchange","");
             } else if (playerPort.equals("3")) {
                 if (player.cards.size() >= 3) {
@@ -67,7 +64,6 @@ public class ExchangeWithPorts {
                     playerGivesList = getStrings(playerGivesList, 3);
                     for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                     player.cards.add(playerReceives.charAt(0));
-                    catcher.makeMessage("Exchange gone well<br>" + player.cards, "");
                 } else catcher.makeMessage("You don't have enough resources for exchange","");
             } else catcher.makeMessage("You don't have enough resources for exchange","");
         }

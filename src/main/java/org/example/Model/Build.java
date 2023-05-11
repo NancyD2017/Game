@@ -57,7 +57,7 @@ class Build {
                                     allRight = true;
                                     player.points += 1;
                                     e.getResources(row, column, player);
-                                    catcher.makeMessage("The town has been built!","");
+                                    catcher.passGraphics(row, column, player.color, "town");
                                     player.roads -= 1;
                                     toRemove = new ArrayList<>(List.of('b', 'w', 's', 'f'));
                                     player.towns -= 1;
@@ -97,7 +97,7 @@ class Build {
                                     allRight = true;
                                     player.points += 1;
                                     e.getResources(rowC, columnC, player);
-                                    catcher.makeMessage("The city has been built!","");
+                                    catcher.passGraphics(rowC, columnC, player.color, "city");
                                     toRemove = new ArrayList<>(List.of('s', 's', 't', 't', 't'));
                                     player.cities -= 1;
                                     player.towns += 1;
