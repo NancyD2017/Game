@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.Model.Colors;
-import org.example.Model.Model;
+import org.example.model.Colors;
+import org.example.model.Model;
 import java.awt.*;
 import java.util.*;
 

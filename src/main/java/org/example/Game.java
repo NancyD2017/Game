@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.Controller.StringCatcher;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

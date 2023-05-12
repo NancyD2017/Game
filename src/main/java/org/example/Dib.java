@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.Model.Colors;
+import org.example.model.Colors;
 
 public class Dib {
         private Integer row;
