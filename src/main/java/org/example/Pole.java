@@ -2,38 +2,72 @@ package org.example;
 
 import org.example.model.Colors;
 import org.example.model.Model;
+import org.example.model.Player;
+
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static org.example.Game.*;
+import static org.example.model.Model.playerList;
 
 public class Pole {
-    public static ArrayList<Sprite> hexes = new ArrayList<>();
-    public static Sprite pole;
-    public static Sprite background;
-    public static Sprite road;
-    public static Sprite town;
-    public static Sprite city;
-    public static Sprite f;
-    public static Sprite s;
-    public static Sprite t;
-    public static Sprite a;
-    public static Sprite w;
-    public static Sprite b;
+    ArrayList<Sprite> hexes = new ArrayList<>();
+    Sprite pole;
+    Sprite background;
+    Sprite road_r;
+    Sprite town_r;
+    Sprite city_r;
+    Sprite road_b;
+    Sprite town_b;
+    Sprite city_b;
+    Sprite road_g;
+    Sprite town_g;
+    Sprite city_g;
+    Sprite road_o;
+    Sprite town_o;
+    Sprite city_o;
+    Sprite f;
+    Sprite s;
+    Sprite t;
+    Sprite a;
+    Sprite w;
+    Sprite b;
+    Sprite fc;
+    Sprite sc;
+    Sprite tc;
+    Sprite wc;
+    Sprite bc;
+    Sprite price;
     public static ArrayList<Dib> dibs = new ArrayList<>();
     public void init(){
         Game q = new Game();
         pole = q.getSprite("pole.png");
         background = q.getSprite("background.png");
-        road = q.getSprite("road.png");
-        town = q.getSprite("town.png");
-        city = q.getSprite("city.png");
+        road_r = q.getSprite("road_r.png");
+        town_r = q.getSprite("town_r.png");
+        city_r = q.getSprite("city_r.png");
+        road_b = q.getSprite("road_b.png");
+        town_b = q.getSprite("town_b.png");
+        city_b = q.getSprite("city_b.png");
+        road_g = q.getSprite("road_g.png");
+        town_g = q.getSprite("town_g.png");
+        city_g = q.getSprite("city_g.png");
+        road_o = q.getSprite("road_o.png");
+        town_o = q.getSprite("town_o.png");
+        city_o = q.getSprite("city_o.png");
+        price = q.getSprite("price.png");
         f = q.getSprite("field_hex.png");
         s = q.getSprite("straw_hex.png");
         t = q.getSprite("stone_hex.png");
         a = q.getSprite("sand_hex.png");
         w = q.getSprite("woods_hex.png");
         b = q.getSprite("brick_hex.png");
+        fc = q.getSprite("f_card.png");
+        sc = q.getSprite("s_card.png");
+        tc = q.getSprite("t_card.png");
+        wc = q.getSprite("w_card.png");
+        bc = q.getSprite("b_card.png");
         for (Character character: Model.hexes) {
             switch (character) {
                 case 's' -> hexes.add(s);
@@ -70,12 +104,34 @@ public class Pole {
             number++;
         }
         pole.draw(g,x,0);
+        price.draw(g,0, (int) (365 * percent));
     }
     public void drawDib(Integer row, Integer column, Colors color, Graphics g, String item) {
-        Sprite drawSprite;
-        if (item.equals("town")) drawSprite = town;
-        else if (item.equals("city")) drawSprite = city;
-        else drawSprite = road;
+        Sprite drawSprite = null;
+        if (item.equals("town")) {
+            switch (color) {
+                case Orange ->  drawSprite = town_o;
+                case Blue ->  drawSprite = town_b;
+                case Red ->  drawSprite = town_r;
+                case Gray ->  drawSprite = town_g;
+            }
+        }
+        else if (item.equals("city")) {
+            switch (color) {
+                case Orange ->  drawSprite = city_o;
+                case Blue->  drawSprite = city_b;
+                case Red ->  drawSprite = city_r;
+                case Gray ->  drawSprite = city_g;
+            }
+        }
+        else {
+            switch (color) {
+                case Orange ->  drawSprite = road_o;
+                case Blue ->  drawSprite = road_b;
+                case Red ->  drawSprite = road_r;
+                case Gray ->  drawSprite = road_g;
+            }
+        }
         int x = 0;
         int y = 0;
         switch (row) {
@@ -109,7 +165,7 @@ public class Pole {
             }
             case 7 -> {
                 x = 554;
-                y = 580;
+                y = 655;
             }
             case 8 -> {
                 x = 540;
@@ -148,22 +204,30 @@ public class Pole {
             }
         } else drawSprite.draw(g, percent(x + (194 * column)), percent(y));
     }
-    private Color getColor(Colors color) {
-        switch (color) {
-            case Red -> {
-                return Color.RED;
-            }
-            case Blue -> {
-                return Color.BLUE;
-            }
-            case Gray -> {
-                return Color.GRAY;
-            }
-            case Orange -> {
-                return Color.ORANGE;
+    public void drawCard(Player player, List<Character> cards, Graphics g) {
+        int number = playerList.indexOf(player);
+        int x = 0;
+        int y = 0;
+        Sprite drawSprite = null;
+        switch (number) {
+            case 1 -> x = 1382;
+            case 2 -> y = 786;
+            case 3 -> {
+                x = 1382;
+                y = 786;
             }
         }
-        return null;
+        for (Character card: cards) {
+            switch (card) {
+                case 's' -> drawSprite = sc;
+                case 'f' -> drawSprite = fc;
+                case 't' -> drawSprite = tc;
+                case 'w' -> drawSprite = wc;
+                case 'b' -> drawSprite = bc;
+            }
+            drawSprite.draw(g, percent(x), percent(y));
+            x += ((percent(373) / cards.size()));
+        }
     }
     Integer percent(Integer number) {
         return (int) (number * percent);

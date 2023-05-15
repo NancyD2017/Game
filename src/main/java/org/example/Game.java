@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.model.Model;
+import org.example.model.Player;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,9 +10,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
 
 import static org.example.Pole.dibs;
+import static org.example.model.Model.*;
 
 public class Game extends Canvas implements Runnable {
     private boolean running;
@@ -38,16 +41,32 @@ public class Game extends Canvas implements Runnable {
                bs.show();
     }
     public void update(Graphics g) {
-        Iterator<Dib> iterator = dibs.iterator();
-        while (iterator.hasNext()) {
-            Dib dib = iterator.next();
-            pole.drawDib(dib.getRow(), dib.getColumn(), dib.getColor(), g, dib.getType());
-        }
+        try {
+            for (Dib dib : dibs) {
+                pole.drawDib(dib.getRow(), dib.getColumn(), dib.getColor(), g, dib.getType());
+            }
+            for (Player player : playerList) {
+                pole.drawCard(player, player.cards, g);
+            }
+            if (Model.cubesNumber > 0) {
+                g.setColor(Color.white);
+                g.setFont(new Font("Arial", Font.BOLD, (int) (percent * 60)));
+                g.drawString(String.valueOf(Model.cubesNumber), (int) (percent * 296), (int) (percent * 530));
+                g.setFont(new Font("Arial", Font.BOLD, (int) (percent * 24)));
+                String points = "Most points holder is player " + (playerList.indexOf(mostPointsHolder) + 1) + ": " + mostPoints;
+                String knights = "Most knights holder is player " + (playerList.indexOf(mostKnightsHolder) + 1) + ": " + mostKnights;
+                String roads =  "Most roads holder is player " + (playerList.indexOf(leastRoadsLeftHolder) + 1) + ": " + (15 - leastRoadsLeft);
+                g.drawString(points, (int) (1514 * percent), (int) (389 * percent));
+                g.drawString(knights, (int) (1514 * percent), (int) (339 * percent));
+                g.drawString(roads, (int) (1514 * percent), (int) (439 * percent));
+            }
+        } catch (Exception ignored) {}
     }
     public void main() {
         Game game = new Game();
         game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         JFrame frame = new JFrame("Catan");
+        frame.setAlwaysOnTop(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(game, BorderLayout.CENTER);
@@ -69,6 +88,6 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Sprite(Toolkit.getDefaultToolkit().createImage(sourceImage.getSource()));
+        return new Sprite(Toolkit.getDefaultToolkit().createImage(sourceImage != null ? sourceImage.getSource() : null));
     }
 }

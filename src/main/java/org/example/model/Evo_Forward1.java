@@ -4,8 +4,7 @@ import org.example.controller.Buttons_Forward1;
 import org.example.controller.StringCatcher;
 
 class Evo_Forward1 extends EvolutionCards {
-    Evo_Forward1(Model model, Player player) {
-        super(model);
+    Evo_Forward1() {
     }
     @Override
     boolean action() {
@@ -15,7 +14,7 @@ class Evo_Forward1 extends EvolutionCards {
         Buttons_Forward1.message = "";
         Buttons_Forward1.messageToPass = null;
         String[] ir = iReceive.split(" ");
-        for (String item : ir) player.cards.add(item.charAt(0));
+        for (String item : ir) gamer.cards.add(item.charAt(0));
         return true;
     }
 }

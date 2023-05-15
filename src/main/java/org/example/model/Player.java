@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player {
     Colors color;
-    Set<FieldItem> available = new HashSet<>();                                                                        //показывает расположение фигурок этого игрока в формате: ряд, столбец, название
+    List<FieldItem> available = new ArrayList<>();                                                                        //показывает расположение фигурок этого игрока в формате: ряд, столбец, название
     public List<Character> cards = new ArrayList<>();                                                                      //карточки ресурсов для каждого игрока, с помощью которых можно что-то купить, обменять
     Integer points = 0;
     public HashSet<String> ports = new HashSet<>();                                                                         //показывает порты игрока - это реализует обмен с портом

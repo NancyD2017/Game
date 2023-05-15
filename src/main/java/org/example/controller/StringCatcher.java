@@ -31,6 +31,9 @@ public class StringCatcher {
         return null;
     }
     public static void passGraphics(Integer rowR, Integer columnR, Colors color, String item) {
+        if (item.equals("city")) {
+            dibs.removeIf(dib -> dib.getRow().equals(rowR) && dib.getColumn().equals(columnR) && dib.getType().equals("town"));
+        }
         Dib d = new Dib(rowR, columnR, color, item);
         dibs.add(d);
     }

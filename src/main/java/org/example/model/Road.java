@@ -3,8 +3,8 @@ package org.example.model;
 import org.example.controller.List_Locations;
 import org.example.controller.StringCatcher;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 class Road {
     boolean main(Player player) {
@@ -15,15 +15,15 @@ class Road {
         while (columnR == null) {
             try {
                 columnR = Integer.parseInt(locations.selectedColumn) - 1;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         Integer rowR = null;
         while (rowR == null) {
             rowR = Integer.parseInt(locations.selectedRow) - 1;
         }
-        Set<FieldItem> toAdd = new HashSet<>();
-        Set<FieldItem> playersArsenal = player.available;
+        List<FieldItem> toAdd = new ArrayList<>();
+        List<FieldItem> playersArsenal = player.available;
             for (FieldItem t : playersArsenal) {
                 if ((Model.field[rowR][columnR] == Item.r) && (((t.item == Item.R) && (((t.col * 4 + 1 == columnR) && (t.ro <= 5) && (t.ro == rowR + 1)) ||
                         ((t.col * 4 + 1 == columnR) && (t.ro >= 5) && (t.ro + 1 == rowR)) || ((t.col * 4 - 1 == columnR) && (t.ro <= 5) && (t.ro == 1 + rowR)) ||
@@ -42,16 +42,14 @@ class Road {
                     Model.field[rowR][columnR] = Item.R;
                     p.act(rowR, columnR, player);
                     allRight = true;
-
                     StringCatcher.passGraphics(rowR, columnR, player.color, "road");
                 }
             } if (!allRight){
-
                 StringCatcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
                 return false;
             }
         player.available.addAll(toAdd);
-        return allRight;
+        return true;
     }
 }
 

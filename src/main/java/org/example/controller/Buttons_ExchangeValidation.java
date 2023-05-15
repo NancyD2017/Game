@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 public class Buttons_ExchangeValidation extends Buttons implements ActionListener{
     protected JButton b1, b2;
     public static Object messageToPass = null;
-    public static boolean isPerformed = true;
     public Buttons_ExchangeValidation(JLabel label) {
         super(label);
         main();

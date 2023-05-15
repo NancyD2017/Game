@@ -5,9 +5,7 @@ import org.example.controller.StringCatcher;
 import java.util.Collections;
 
 class Evo_Forward2 extends EvolutionCards {
-    Evo_Forward2(Model model, Player player){
-        super(model);
-    }
+    Evo_Forward2(){}
     @Override
     boolean action(){
         StringCatcher.makeMessage("You can choose 1 resource which <br>will be given to you from competitors: ","Buttons_Forward2");
@@ -19,7 +17,7 @@ class Evo_Forward2 extends EvolutionCards {
             resourcesNumber += Collections.frequency(value.cards, ir[0].charAt(0));
             value.cards.removeAll(Collections.singleton(iReceive.charAt(0)));
         }
-        player.cards.addAll(Collections.nCopies(resourcesNumber, ir[0].charAt(0)));
+        gamer.cards.addAll(Collections.nCopies(resourcesNumber, ir[0].charAt(0)));
         return true;
     }
 }

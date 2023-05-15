@@ -9,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Buttons_Colors extends Buttons implements ActionListener {
-    protected JButton b1, b2, b3, b4;
     public static String messageToPass;
-    public static boolean isPerformed = true;
     public Buttons_Colors(JLabel label) {
         super(label);
         main();
@@ -26,35 +24,22 @@ public class Buttons_Colors extends Buttons implements ActionListener {
         add(label);
         add(Box.createVerticalGlue());
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        b1 = new JButton("            ");
-        b1.setBackground(Color.RED);
-        b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b1.setActionCommand("Red");
-
-        b2 = new JButton("            ");
-        b2.setBackground(Color.blue);
-        b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b2.setActionCommand("Blue");
-
-        b3 = new JButton("            ");
-        b3.setBackground(Color.GRAY);
-        b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b3.setActionCommand("Gray");
-
-        b4 = new JButton("            ");
-        b4.setBackground(Color.ORANGE);
-        b4.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b4.setActionCommand("Orange");
-
-        b1.addActionListener(this);
-        b2.addActionListener(this);
-        b3.addActionListener(this);
-        b4.addActionListener(this);
 
         add(Box.createVerticalGlue());
-        if (Model.colors.contains(Colors.Red)) add(b1);
-        if (Model.colors.contains(Colors.Blue)) add(b2);
-        if (Model.colors.contains(Colors.Gray)) add(b3);
-        if (Model.colors.contains(Colors.Orange)) add(b4);
+        if (Model.colors.contains(Colors.Red)) add(buttonMaker(Color.red));
+        if (Model.colors.contains(Colors.Blue)) add(buttonMaker(Color.BLUE));
+        if (Model.colors.contains(Colors.Gray)) add(buttonMaker(Color.gray));
+        if (Model.colors.contains(Colors.Orange)) add(buttonMaker(Color.ORANGE));
+    }
+    private JButton buttonMaker(Color color){
+        JButton b = new JButton("            ");
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setBackground(color);
+        if (Color.red.equals(color)) b.setActionCommand("Red");
+        if (Color.BLUE.equals(color)) b.setActionCommand("Blue");
+        if (Color.ORANGE.equals(color)) b.setActionCommand("Orange");
+        if (Color.gray.equals(color)) b.setActionCommand("Gray");
+        b.addActionListener(this);
+        return b;
     }
 }

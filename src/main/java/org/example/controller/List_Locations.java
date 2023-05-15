@@ -25,7 +25,6 @@ public class List_Locations extends JFrame implements ActionListener {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.PLAIN, (int) (40 * percent)));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label.setText(text);
 
         firstComboBox = new JComboBox<>(row);
         firstComboBox.addActionListener(this);

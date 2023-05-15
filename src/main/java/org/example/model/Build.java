@@ -11,7 +11,7 @@ import java.util.List;
 class Build {
     List<Character> toRemove;
     List_Locations locations;
-    int act(Player player) {                                                                            //строит поселение, город или дорожку при наступлении хада игрока
+    int act(Player player) {                                                                            //строит поселение, город или дорожку при наступлении хода игрока
         StringCatcher.makeMessage("What do you wanna build?","Buttons_Build");
         Road r = new Road();
         Resources e = new Resources();
@@ -49,15 +49,15 @@ class Build {
                         }
                             for (FieldItem t : player.available)
                                 if (Model.field[row][column] == Item.O && (((t.ro.equals(row)) && (t.col == column - 1 || t.col == column + 1)) ||
-                                        (((row == t.ro + 1) || (row == t.ro - 1)) && (t.ro == 4 || t.ro == 6 || (t.ro < 4 && row > t.ro) || (t.ro > 6 && row < t.ro)) && t.col == column * 4) ||
-                                        (((row == t.ro + 1) || (row == t.ro - 1)) && ((t.ro < 4 && row < t.ro) || (t.ro > 6 && row > t.ro)) && t.col == column * 4 + 2))) {
+                                        ((row == t.ro + 1) && ((t.col * 4 + 2 == column && row <= 4) || (t.col * 4 == column && row >= 6))) ||
+                                        ((row + 1 == t.ro) && ((t.col * 4 + 2 == column && row >= 6) || (t.col * 4 == column && row <= 6))))) {
                                     player.available.add(new FieldItem(row, column, Item.T));
                                     Model.field[row][column] = Item.T;
                                     allRight = true;
                                     player.points += 1;
                                     e.getResources(row, column, player);
                                     StringCatcher.passGraphics(row, column, player.color, "town");
-                                    player.roads -= 1;
+                                    player.towns -= 1;
                                     toRemove = new ArrayList<>(List.of('b', 'w', 's', 'f'));
                                     player.towns -= 1;
                                     break;
@@ -87,11 +87,9 @@ class Build {
                         while (rowC == null) {
                             rowC = Integer.parseInt(locations.selectedRow) - 1;
                         }
-                        FieldItem toDelete = null;
                             for (FieldItem t : player.available)
-                                if (Model.field[rowC][columnC] == Item.T) {
-                                    player.available.add(t = new FieldItem(rowC, columnC, Item.C));
-                                    toDelete = t;
+                                if (t.item == Item.T && t.col.equals(columnC) && t.ro.equals(rowC)) {
+                                    player.available.add(new FieldItem(rowC, columnC, Item.C));
                                     Model.field[rowC][columnC] = Item.C;
                                     allRight = true;
                                     player.points += 1;
@@ -102,7 +100,6 @@ class Build {
                                     player.towns += 1;
                                     break;
                                 }
-                            player.available.remove(toDelete);
                     } else {
                         allRight = true;
                         StringCatcher.makeMessage("You don't have enough resources", "Removal");
@@ -116,9 +113,10 @@ class Build {
         }
         if (!allRight) return 1;
         else {
-            for (Character c : toRemove) {
+            if (toRemove != null) for (Character c : toRemove) {
                 player.cards.remove(c);
             }
+            toRemove = null;
             return 0;
         }
     }

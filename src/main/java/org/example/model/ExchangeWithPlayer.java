@@ -58,7 +58,27 @@ public class ExchangeWithPlayer {
                 StringCatcher.makeMessage("You've made a mistake while choosing<br> resources to give or/and to receive.<br>Try one more time", "");
             }
         }
-        StringCatcher.makeMessage("Player " + exchanger + ",<br> do you want to get in exchange of " + Arrays.toString(playerReceives) + "<br>resources " + Arrays.toString(playerGivesList), "Buttons_ExchangeValidation");
+        StringBuilder exchange = new StringBuilder();
+        for (String getting: playerReceives) {
+            switch (getting) {
+                case "s" -> exchange.append("straw ");
+                case "f" -> exchange.append("field ");
+                case "t" -> exchange.append("stone ");
+                case "w" -> exchange.append("wood ");
+                case "b" -> exchange.append("brick ");
+            }
+        }
+        StringBuilder receive = new StringBuilder();
+        for (String receiving: playerGivesList) {
+            switch (receiving) {
+                case "s" -> receive.append("straw ");
+                case "f" -> receive.append("field ");
+                case "t" -> receive.append("stone ");
+                case "w" -> receive.append("wood ");
+                case "b" -> receive.append("brick ");
+            }
+        }
+        StringCatcher.makeMessage("Player " + exchanger + ",<br> do you want to get in exchange of " + exchange + "<br>resources " + receive, "Buttons_ExchangeValidation");
         String validation = null;
         while (validation == null) {
             validation = (String) StringCatcher.getData("org.example.controller.Buttons_ExchangeValidation");

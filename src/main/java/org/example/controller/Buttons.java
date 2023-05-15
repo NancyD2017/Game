@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.Game;
 import org.example.Sprite;
+import org.example.model.Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,19 +12,19 @@ import java.awt.event.ActionListener;
 import static org.example.Game.percent;
 
 public class Buttons extends JPanel implements ActionListener {
-    public static boolean isPerformed = true;
     final JLabel label;
     static java.util.List<Character> dataToShow;
     public static Sprite getSprite;
-    static Sprite s;
-    static Sprite f;
-    static Sprite t;
-    static Sprite w;
-    static Sprite b;
+    Sprite s;
+    Sprite f;
+    Sprite t;
+    Sprite w;
+    Sprite b;
     static String name;
-    public static Game q = new Game();
+    public static Game q = Model.q;
     public Buttons(JLabel label) {
         this.label = label;
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(label);
         add(Box.createVerticalGlue());
@@ -32,8 +33,8 @@ public class Buttons extends JPanel implements ActionListener {
     public static void init(JLabel label, String className) {
         getSprite = q.getSprite("paper.png");
         JFrame frame = new JFrame("");
-        frame.setLayout(new BorderLayout());
-        frame.add(q, BorderLayout.SOUTH);
+        frame.add(q);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Buttons buttons;
         name = className;
@@ -60,15 +61,19 @@ public class Buttons extends JPanel implements ActionListener {
             }
         }
         if (className.equals("Buttons_Forward1") || className.equals("Buttons_Forward2")) buttons.setPreferredSize(new Dimension(1000, 750));
-        else buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
+        else {
+            buttons.setPreferredSize(new Dimension((int) (getSprite.getWidth() * percent), (int) (getSprite.getHeight() * percent)));
+        }
         frame.setContentPane(buttons);
         frame.setResizable(false);
+        frame.setAlwaysOnTop(true);
         frame.pack();
         frame.setVisible(true);
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        getSprite.draw(g,0,0);
+        if (!(name.equals("Buttons_Forward1") || name.equals("Buttons_Forward2") || name.equals("Buttons_ExchangePlayer")
+                || name.equals("Buttons_ExchangePl"))) getSprite.draw(g,0,0);
         if (name.equals("Resources")) {
                 int x = 50;
                 int y = 80;

@@ -1,5 +1,4 @@
 package org.example.controller;
-
 import org.example.model.ExchangeWithPorts;
 
 import javax.swing.*;
@@ -8,10 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Buttons_4Exchange extends Buttons implements ActionListener{
-    protected JButton b1, b2, b3, b4, b5;
     public static Object messageToPass = null;
     public static String message = "";
-    public static boolean isPerformed = true;
     Integer chosen = 0;
     public Buttons_4Exchange(JLabel label) {
         super(label);
@@ -25,42 +22,11 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
         JPanel buttonPanel = new JPanel(new GridLayout(0, 5));
         buttonPanel.setAlignmentX(label.getAlignmentX());
 
-        Image straw = new ImageIcon("src/main/resources/s_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon s = new ImageIcon(straw);
-        b1 = new JButton(s);
-        b1.setActionCommand("s");
-
-        Image field = new ImageIcon("src/main/resources/f_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon f = new ImageIcon(field);
-        b2 = new JButton(f);
-        b2.setActionCommand("f");
-
-        Image stone = new ImageIcon("src/main/resources/t_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon t = new ImageIcon(stone);
-        b3 = new JButton(t);
-        b3.setActionCommand("t");
-
-        Image wood = new ImageIcon("src/main/resources/w_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon w = new ImageIcon(wood);
-        b4 = new JButton(w);
-        b4.setActionCommand("w");
-
-        Image brick = new ImageIcon("src/main/resources/b_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon b = new ImageIcon(brick);
-        b5 = new JButton(b);
-        b5.setActionCommand("b");
-
-        b1.addActionListener(this);
-        b2.addActionListener(this);
-        b3.addActionListener(this);
-        b4.addActionListener(this);
-        b5.addActionListener(this);
-
-        if (ExchangeWithPorts.player.cards.contains('s')) buttonPanel.add(b1);
-        if (ExchangeWithPorts.player.cards.contains('f')) buttonPanel.add(b2);
-        if (ExchangeWithPorts.player.cards.contains('t')) buttonPanel.add(b3);
-        if (ExchangeWithPorts.player.cards.contains('w')) buttonPanel.add(b4);
-        if (ExchangeWithPorts.player.cards.contains('b')) buttonPanel.add(b5);
+        if (ExchangeWithPorts.player.cards.contains('s')) buttonPanel.add(buttonMaker("s"));
+        if (ExchangeWithPorts.player.cards.contains('f')) buttonPanel.add(buttonMaker("f"));
+        if (ExchangeWithPorts.player.cards.contains('t')) buttonPanel.add(buttonMaker("t"));
+        if (ExchangeWithPorts.player.cards.contains('w')) buttonPanel.add(buttonMaker("w"));
+        if (ExchangeWithPorts.player.cards.contains('b')) buttonPanel.add(buttonMaker("b"));
         panel.add(buttonPanel);
         add(panel);
     }
@@ -74,5 +40,13 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             frame.dispose();
         }
+    }
+    private JButton buttonMaker(String resource){
+        Image image = new ImageIcon("src/main/resources/" + resource + "_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
+        ImageIcon s = new ImageIcon(image);
+        JButton b = new JButton(s);
+        b.setActionCommand(resource);
+        b.addActionListener(this);
+        return b;
     }
 }

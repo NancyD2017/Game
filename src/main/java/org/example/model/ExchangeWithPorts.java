@@ -17,13 +17,12 @@ public class ExchangeWithPorts {
         if (player.ports.size() == 0) {
             if (player.cards.size() >= 4) {
                 useExchange = 4;
-                String[] playerGivesList = null;
-                playerGivesList = getStrings(playerGivesList, 4);
+                String[] playerGivesList = getStrings(null, 4);
                 for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                 StringCatcher.makeMessage("Choose resource to receive", "Buttons_4ExchangePort");
                 String playerGets = null;
-                while (playerGets == null) {
-                    playerGets = StringCatcher.getData("Buttons_4ExchangePort").toString();
+                while (playerGets == null || playerGets.equals("null")) {
+                    playerGets = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
                 }
                 player.cards.add(playerGets.charAt(0));
                 Buttons_4ExchangePort.messageToPass = null;
@@ -48,8 +47,7 @@ public class ExchangeWithPorts {
             } else if (playerPort.equals("4")) {
                 if (player.cards.size() >= 4) {
                     useExchange = 4;
-                    String[] playerGivesList = null;
-                    playerGivesList = getStrings(playerGivesList, 4);
+                    String[] playerGivesList = getStrings(null, 4);
                     for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                     player.cards.add(playerReceives.charAt(0));
                 } else StringCatcher.makeMessage("You don't have enough resources for exchange","");

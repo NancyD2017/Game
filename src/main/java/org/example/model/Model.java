@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Model {
     public static Integer players;
+    public static int cubesNumber = 0;
     static public ArrayList<Character> hexes = new ArrayList<>();
     static Item[][] field = {
             {Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O, Item.r, Item.O},                                          //это само игровое поле, на котором размещаются дороги, поселения и города
@@ -26,17 +27,17 @@ public class Model {
     };
     public static List<Player> playerList = List.of(new Player(), new Player(), new Player(), new Player());
     static ArrayList<String> evolutionCards = new ArrayList<>();                                                        //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
-    static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
-    static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
-    static Player mostKnightsHolder = playerList.get(0);
-    static int leastRoadsLeft = 13;
-    static Player leastRoadsLeftHolder = playerList.get(0);
+    public static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
+    public static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
+    public static Player mostKnightsHolder = playerList.get(0);
+    public static int leastRoadsLeft = 13;
+    public static Player leastRoadsLeftHolder = playerList.get(0);
     public static List<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
-    static Player mostPointsHolder = playerList.get(0);
+    public static Player mostPointsHolder = playerList.get(0);
     FirstBuilding f = new FirstBuilding();
     ExchangeWithPlayer p = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
-    public Game q = new Game();
+    public static Game q = new Game();
     Build b = new Build();
     public void main() {
         hexes.addAll(Arrays.asList('f', 'f', 'f', 'f', 's', 's', 's', 's', 't', 't', 't', 'w', 'w', 'w', 'w', 'b', 'b', 'b')); //случайным образом создает поле
@@ -60,13 +61,13 @@ public class Model {
         q.main();
         for (int i = 0; i < players ; i++) {
             String choice = null;
-            StringCatcher.makeMessage("Choose the color of dibs for player " + (i + 1) + " from possible ", "Buttons_Colors");
+            StringCatcher.makeMessage("<html><div style='text-align: center;'>Choose the color of dibs for player " + (i + 1) + " from possible ", "Buttons_Colors");
             while (choice == null || choice.isEmpty()) choice = (String) StringCatcher.getData("org.example.controller.Buttons_Colors");
             Buttons_Colors.messageToPass = null;
             i -= f.main(i, Colors.valueOf(choice));
         }
         for (int i = players; i > 0; i--) {
-            FirstBuilding.addText = (" player " + i + " it's your turn. Build one more town and road");
+            FirstBuilding.addText = ("player " + i + ", build one more town and road<br>");
             i += f.main(i - 1, playerList.get(i - 1).color);
         }
         gameProcess();
@@ -77,11 +78,10 @@ public class Model {
             for (int k = 0; k < players; k++) {
                 if (!retakeTurn) {
                     Random random = new Random();
-                    int cubesNumber = 0;
+                    cubesNumber = 0;
                     while (!((cubesNumber >= 2 && cubesNumber <= 12))) {
                         cubesNumber = random.nextInt(11) + 2;
                     }
-
                     for (int pointsForPlayer = 0; pointsForPlayer < players; pointsForPlayer++) {
                         List<Character> elementsToReceive = playerList.get(pointsForPlayer).element.get(cubesNumber);
                         if (elementsToReceive != null) playerList.get(pointsForPlayer).cards.addAll(elementsToReceive);
@@ -109,9 +109,6 @@ public class Model {
                     retakeTurn = false;
                 }
             }
-            StringCatcher.makeMessage("Most points holder is player " + (playerList.indexOf(mostPointsHolder) + 1) + ": " + mostPoints +
-            "<br>Most knights holder is player " + (playerList.indexOf(mostKnightsHolder) + 1) + ": " + mostKnights +
-            "<br>Most roads holder is player " + (playerList.indexOf(leastRoadsLeftHolder) + 1) + ": " + (15 - leastRoadsLeft),"Removal");
         }
         StringCatcher.makeMessage("Congratulates to winner!<br>and the winner is...<br><br> " + playerList.indexOf(mostPointsHolder) + "!", "Default");
     }
@@ -137,7 +134,7 @@ public class Model {
                 }
                 case 4 -> {
                     allRight = true;
-                    new EvolutionCards(new Model()).main(player);
+                    new EvolutionCards().main(player);
                 }
                 case 5 -> allRight = true;
             }

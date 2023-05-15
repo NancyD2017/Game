@@ -1,8 +1,8 @@
 package org.example.model;
 
-public class Test {
+public class Play {
+    public static Model model = new Model();
     public static void main(String[] args) {
-        Model model = new Model();
         model.main();
     }
 }

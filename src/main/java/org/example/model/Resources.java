@@ -41,16 +41,16 @@ class Resources {
                     }
                     case 8 -> {
                         addResource(player, 2, 1);
-                        addResource(player,4, 3);
+                        addResource(player,4, 5);
                         addResource(player, 9, 4);
                     }
                     case 10 -> {
                         addResource(player, 2, 1);
-                        addResource(player, 4, 3);
+                        addResource(player, 4, 5);
                         addResource(player, 6, 2);
                     }
                     case 12 -> {
-                        addResource(player, 4, 3);
+                        addResource(player, 4, 5);
                         addResource(player, 6, 2);
                         addResource(player, 3, 6);
                     }
@@ -167,8 +167,8 @@ class Resources {
                     }
                     case 6 -> {
                         addResource(player, 3, 12);
-                        addResource(player, 12, 15);
-                        addResource(player, 11, 16);
+                        addResource(player, 12, 16);
+                        addResource(player, 11, 15);
                     }
                     case 8 -> {
                         addResource(player, 3, 12);
@@ -210,7 +210,9 @@ class Resources {
         }
     }
     static void addResource(Player player, int element, int hexIndex) {
-        player.element.put(element, new ArrayList<>());
+        if (!player.element.containsKey(element)) {
+            player.element.put(element, new ArrayList<>());
+        }
         player.element.get(element).add(hexes.get(hexIndex));
     }
 }
