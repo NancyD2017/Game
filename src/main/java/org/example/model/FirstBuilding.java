@@ -51,12 +51,12 @@ class FirstBuilding {
                             Model.colors.remove(mcolor);
                             StringCatcher.passGraphics(rowR, columnR, mcolor, "road");
                         } else {
-                            StringCatcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
+                            StringCatcher.makeMessage("Player " + (player + 1) + ", wrong coordinates of the road<br>Try one more time","");
                             j -= 1;
                         }
                 }
             } else {
-                StringCatcher.makeMessage("Try one more time","");
+                StringCatcher.makeMessage("Player " + (player + 1) + ", try one more time","");
                 return 1;
             }
         playerList.get(player).points += 1;

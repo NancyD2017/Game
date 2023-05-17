@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.example.model.Model.playerList;
+
 public class ExchangeWithPorts {
     public static Player player;
     public static Integer useExchange;
@@ -19,22 +21,22 @@ public class ExchangeWithPorts {
                 useExchange = 4;
                 String[] playerGivesList = getStrings(null, 4);
                 for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
-                StringCatcher.makeMessage("Choose resource to receive", "Buttons_4ExchangePort");
+                StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose resource to receive", "Buttons_4ExchangePort");
                 String playerGets = null;
                 while (playerGets == null || playerGets.equals("null")) {
                     playerGets = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
                 }
                 player.cards.add(playerGets.charAt(0));
                 Buttons_4ExchangePort.messageToPass = null;
-            } else StringCatcher.makeMessage("You don't have enough resources for exchange","");
+            } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
         } else {
-            StringCatcher.makeMessage("Choose any port you'd like to exchange with", "Buttons_ExchangePort");
+            StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose any port you'd like to exchange with", "Buttons_ExchangePort");
             String playerPort = null;
             while (playerPort == null) {
                 playerPort = (String) StringCatcher.getData("org.example.controller.Buttons_ExchangePort");
             }
             Buttons_ExchangePort.messageToPass = null;
-            StringCatcher.makeMessage("Choose resource to receive:", "Buttons_4ExchangePort");
+            StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose resource to receive:", "Buttons_4ExchangePort");
             String playerReceives = null;
             while (playerReceives == null) {
                 playerReceives = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
@@ -50,7 +52,7 @@ public class ExchangeWithPorts {
                     String[] playerGivesList = getStrings(null, 4);
                     for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                     player.cards.add(playerReceives.charAt(0));
-                } else StringCatcher.makeMessage("You don't have enough resources for exchange","");
+                } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
             } else if (playerPort.equals("3")) {
                 if (player.cards.size() >= 3) {
                     useExchange = 3;
@@ -58,15 +60,15 @@ public class ExchangeWithPorts {
                     playerGivesList = getStrings(playerGivesList, 3);
                     for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
                     player.cards.add(playerReceives.charAt(0));
-                } else StringCatcher.makeMessage("You don't have enough resources for exchange","");
-            } else StringCatcher.makeMessage("You don't have enough resources for exchange","");
+                } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
+            } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
         }
     }
 
     private static String[] getStrings(String[] playerGivesList, Integer numberResources) {
         boolean isAllRight = false;
         while (!isAllRight) {
-            StringCatcher.makeMessage("Choose " + numberResources + " resources for exchange 1:" + numberResources, "Buttons_4Exchange");
+            StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose " + numberResources + " resources for exchange 1:" + numberResources, "Buttons_4Exchange");
             String playerGives = null;
             while (playerGives == null) {
                 playerGives = (String) StringCatcher.getData("org.example.controller.Buttons_4Exchange");
@@ -83,7 +85,7 @@ public class ExchangeWithPorts {
                     break;
                 }
             }
-            if (!isAllRight) StringCatcher.makeMessage("You've made a mistake while choosing<br> resources to give.<br>Try one more time", "");
+            if (!isAllRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you've made a mistake while choosing<br> resources to give.<br>Try one more time", "");
         }
         return playerGivesList;
     }

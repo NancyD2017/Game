@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.example.model.Model.playerList;
+
 public class EvolutionCards {
     boolean action() {
         return true;
@@ -36,6 +38,6 @@ public class EvolutionCards {
                     }
                     allRight = card.action();
                 }
-            } else StringCatcher.makeMessage("You don't have enough resources","");
+            } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources","");
         }
 }

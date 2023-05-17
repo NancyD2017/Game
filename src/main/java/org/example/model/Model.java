@@ -29,11 +29,11 @@ public class Model {
     static ArrayList<String> evolutionCards = new ArrayList<>();                                                        //так как максимальное количество игроков - 4, сразу задаем их. После список будет весьма полезен
     public static int mostKnights = 0;                                                                                         //эти 6 переменных с говорящими именами так или иначе позволяют определить победителя
     public static int mostPoints = 2;                                                                                          //два очка причисляются в самом начале, потому что сразу строятся 2 поселения
-    public static Player mostKnightsHolder = playerList.get(0);
+    public static Player mostKnightsHolder;
     public static int leastRoadsLeft = 13;
-    public static Player leastRoadsLeftHolder = playerList.get(0);
+    public static Player leastRoadsLeftHolder;
     public static List<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
-    public static Player mostPointsHolder = playerList.get(0);
+    public static Player mostPointsHolder;
     FirstBuilding f = new FirstBuilding();
     ExchangeWithPlayer p = new ExchangeWithPlayer();
     ExchangeWithPorts ports = new ExchangeWithPorts();
@@ -92,29 +92,42 @@ public class Model {
                     retakeTurn = true;
                 }
                 else {
-                    if (playerList.get(k).knights >= 3 && mostKnights < playerList.get(k).knights) {
-                        playerList.get(k).points += 2;
-                        if (mostKnightsHolder == null) mostKnightsHolder = playerList.get(k);
-                        else mostKnightsHolder.points -= 2;
+                    if (playerList.get(k).knights >= 3) {
+                        if (mostKnightsHolder != null && mostKnightsHolder.knights < playerList.get(k).knights) {
+                            mostKnightsHolder.points -= 2;
+                        }
+                        if (playerList.get(k) != mostKnightsHolder && (mostKnightsHolder == null || playerList.get(k).knights > mostKnightsHolder.knights)) {
+                            mostKnightsHolder = playerList.get(k);
+                            mostKnightsHolder.points += 2;
+                        }
+                        mostKnights = (mostKnightsHolder != null) ? mostKnightsHolder.knights : 0;
                     }
-                    if (playerList.get(k).roads <= 15 - 5 && leastRoadsLeft > playerList.get(k).roads) {
-                        playerList.get(k).points += 2;
-                        if (leastRoadsLeftHolder == null) leastRoadsLeftHolder = playerList.get(k);
-                        else leastRoadsLeftHolder.points -= 2;
+                    if (playerList.get(k).roads <= 15 - 5) {
+                        if (leastRoadsLeftHolder != null && leastRoadsLeftHolder.roads > playerList.get(k).roads) {
+                            leastRoadsLeftHolder.points -= 2;
+                        }
+                        if (playerList.get(k) != leastRoadsLeftHolder && (leastRoadsLeftHolder == null || playerList.get(k).roads < leastRoadsLeftHolder.roads)) {
+                            leastRoadsLeftHolder = playerList.get(k);
+                            leastRoadsLeftHolder.points += 2;
+                        }
+                        leastRoadsLeft = (leastRoadsLeftHolder != null) ? leastRoadsLeftHolder.roads : 0;
                     }
-                    if (mostPoints < playerList.get(k).points) {
-                        mostPointsHolder = playerList.get(k);
-                        mostPoints = playerList.get(k).points;
+                    mostPoints = 0;
+                    for (Player player : playerList) {
+                        if (player != null && player.points > mostPoints) {
+                            mostPoints = player.points;
+                            mostPointsHolder = player;
+                        }
                     }
                     retakeTurn = false;
                 }
             }
         }
-        StringCatcher.makeMessage("Congratulates to winner!<br>and the winner is...<br><br> " + playerList.indexOf(mostPointsHolder) + "!", "Default");
+        StringCatcher.makeMessage("Congratulates to winner!<br>and the winner is...<br><br> " + (playerList.indexOf(mostPointsHolder) + 1) + "!", "Default");
     }
     Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
-        StringCatcher.makeMessage("Player " + (l + 1) + ", it's your turn.Choose your next action", "Turn");
+        StringCatcher.makeMessage("Player " + (l + 1) + ", it's your turn. Choose your next action", "Turn");
         while (!allRight) {
             Integer action = null;
             while (action == null) action = (Integer) StringCatcher.getData("org.example.controller.Buttons_Turns");

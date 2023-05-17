@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.example.model.Model.playerList;
+
 class Build {
     List<Character> toRemove;
     List_Locations locations;
     int act(Player player) {                                                                            //строит поселение, город или дорожку при наступлении хода игрока
-        StringCatcher.makeMessage("What do you wanna build?","Buttons_Build");
+        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", what do you wanna build?","Buttons_Build");
         Road r = new Road();
         Resources e = new Resources();
         String someBuilding = null;
@@ -27,9 +29,9 @@ class Build {
                         allRight = r.main(player);
                     } else {
                         allRight = true;
-                        StringCatcher.makeMessage("You don't have enough resources", "Removal");
+                        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
-                } else StringCatcher.makeMessage("You don't have enough roads", "Removal");
+                } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough roads", "Removal");
                 if (player.roads < Model.leastRoadsLeft) Model.leastRoadsLeft = player.roads;
             }
             case "Town" -> {
@@ -64,18 +66,18 @@ class Build {
                                 }
                     } else {
                         allRight = true;
-                        StringCatcher.makeMessage("You don't have enough resources", "Removal");
+                        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
                 } else {
-                    StringCatcher.makeMessage("You don't have enough towns", "Removal");
+                    StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough towns", "Removal");
                     allRight = true;
                 }
-                if (!allRight) StringCatcher.makeMessage("Wrong coordinates. Try one more time", "Removal");
+                if (!allRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
             }
             case "City" -> {
                 if (player.cities > 0) {
                     if (countOccurrences(player.cards, 's') >= 2 && countOccurrences(player.cards, 't') >= 3) {
-                        locations = new List_Locations("Choose the location of city");
+                        locations = new List_Locations("Player " + (playerList.indexOf(player) + 1) + ", choose the location of city");
                         Integer columnC = null;
                         while (columnC == null) {
                             try {
@@ -102,13 +104,13 @@ class Build {
                                 }
                     } else {
                         allRight = true;
-                        StringCatcher.makeMessage("You don't have enough resources", "Removal");
+                        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
                 } else {
-                    StringCatcher.makeMessage("You don't have enough cities", "Removal");
+                    StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough cities", "Removal");
                     allRight = true;
                 }
-                if (!allRight) StringCatcher.makeMessage("Wrong coordinates. Try one more time", "Removal");
+                if (!allRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
             }
         }
         if (!allRight) return 1;

@@ -6,6 +6,8 @@ import org.example.controller.StringCatcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.model.Model.playerList;
+
 class Road {
     boolean main(Player player) {
         PossiblePorts p = new PossiblePorts();
@@ -41,11 +43,12 @@ class Road {
                     toAdd.add(new FieldItem(rowR, columnR, Item.R));
                     Model.field[rowR][columnR] = Item.R;
                     p.act(rowR, columnR, player);
+                    player.roads -= 1;
                     allRight = true;
                     StringCatcher.passGraphics(rowR, columnR, player.color, "road");
                 }
             } if (!allRight){
-                StringCatcher.makeMessage("Wrong coordinates of the road<br>Try one more time","");
+                StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates of the road<br>Try one more time","");
                 return false;
             }
         player.available.addAll(toAdd);

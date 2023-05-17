@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.example.model.Model.playerList;
+
 public class ExchangeWithPlayer {
     public static Player player;
     public static Player nameExchanger;
@@ -13,7 +15,7 @@ public class ExchangeWithPlayer {
         player = pl;
         String[] playerReceives = null;
         String[] playerGivesList = null;
-        StringCatcher.makeMessage("With whom do you wanna<br> exchange your card with?", "Buttons_EPlayer");
+        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", with whom do you wanna<br> exchange your card with?", "Buttons_EPlayer");
         Integer exchanger = null;
         while (exchanger == null) exchanger = (Integer) StringCatcher.getData("org.example.controller.Buttons_EPlayer");
         nameExchanger = Model.playerList.get(exchanger - 1);
@@ -29,7 +31,7 @@ public class ExchangeWithPlayer {
             playerGivesList = playerGives.split(" ");
             Buttons_ExchangePlayer.messageToPass = null;
             Buttons_ExchangePlayer.message = "";
-            StringCatcher.makeMessage("Choose resources you'd<br> like to get from opponent:", "Buttons_ExchangePl");
+            StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose resources you'd<br> like to get from opponent:", "Buttons_ExchangePl");
             while (playerReceives == null) {
                 Object o = StringCatcher.getData("org.example.controller.Buttons_ExchangePl");
                 if (o != null) playerReceives = o.toString().split(" ");
@@ -55,30 +57,34 @@ public class ExchangeWithPlayer {
             }
             if (!isAllRight) {
                 playerReceives = null;
-                StringCatcher.makeMessage("You've made a mistake while choosing<br> resources to give or/and to receive.<br>Try one more time", "");
+                StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you've made a mistake while choosing<br> resources to give or/and to receive.<br>Try one more time", "");
             }
         }
         StringBuilder exchange = new StringBuilder();
         for (String getting: playerReceives) {
             switch (getting) {
-                case "s" -> exchange.append("straw ");
-                case "f" -> exchange.append("field ");
-                case "t" -> exchange.append("stone ");
-                case "w" -> exchange.append("wood ");
-                case "b" -> exchange.append("brick ");
+                case "s" -> exchange.append("straw");
+                case "f" -> exchange.append("field");
+                case "t" -> exchange.append("stone");
+                case "w" -> exchange.append("wood");
+                case "b" -> exchange.append("brick");
             }
+            exchange.append(", ");
         }
+        exchange.delete(exchange.lastIndexOf(","), exchange.lastIndexOf(",") + 1);
         StringBuilder receive = new StringBuilder();
         for (String receiving: playerGivesList) {
             switch (receiving) {
-                case "s" -> receive.append("straw ");
-                case "f" -> receive.append("field ");
-                case "t" -> receive.append("stone ");
-                case "w" -> receive.append("wood ");
-                case "b" -> receive.append("brick ");
+                case "s" -> receive.append("straw");
+                case "f" -> receive.append("field");
+                case "t" -> receive.append("stone");
+                case "w" -> receive.append("wood");
+                case "b" -> receive.append("brick");
             }
+            receive.append(", ");
         }
-        StringCatcher.makeMessage("Player " + exchanger + ",<br> do you want to get in exchange of " + exchange + "<br>resources " + receive, "Buttons_ExchangeValidation");
+        receive.delete(receive.lastIndexOf(","), receive.lastIndexOf(",") + 1);
+        StringCatcher.makeMessage("Player " + exchanger + ",<br> do you want to get in exchange of " + exchange + "<br>resources " + receive + "?", "Buttons_ExchangeValidation");
         String validation = null;
         while (validation == null) {
             validation = (String) StringCatcher.getData("org.example.controller.Buttons_ExchangeValidation");
