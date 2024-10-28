@@ -20,13 +20,15 @@ public class ExchangeWithPorts {
             if (player.cards.size() >= 4) {
                 useExchange = 4;
                 String[] playerGivesList = getStrings(null, 4);
-                for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
-                StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose resource to receive", "Buttons_4ExchangePort");
-                String playerGets = null;
-                while (playerGets == null || playerGets.equals("null")) {
-                    playerGets = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
+                if (playerGivesList != null) {
+                    for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
+                    StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", choose resource to receive", "Buttons_4ExchangePort");
+                    String playerGets = null;
+                    while (playerGets == null || playerGets.equals("null")) {
+                        playerGets = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
+                    }
+                    if (!playerGets.equals("Cancel exchange")) player.cards.add(playerGets.charAt(0));
                 }
-                player.cards.add(playerGets.charAt(0));
                 Buttons_4ExchangePort.messageToPass = null;
             } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
         } else {
@@ -41,27 +43,38 @@ public class ExchangeWithPorts {
             while (playerReceives == null) {
                 playerReceives = (String) StringCatcher.getData("org.example.controller.Buttons_4ExchangePort");
             }
+            System.out.println(playerReceives);
+            if (!playerReceives.equals("Cancel exchange")) {
+                    Buttons_4ExchangePort.messageToPass = null;
+                if (!playerPort.equals("3") && !playerPort.equals("4") && Collections.frequency(player.cards, playerPort.charAt(0)) >= 2) {
+                    player.cards.remove(Character.valueOf(playerPort.charAt(0)));
+                    player.cards.remove(Character.valueOf(playerPort.charAt(0)));
+                    player.cards.add(playerReceives.charAt(0));
+                } else if (playerPort.equals("4")) {
+                    if (player.cards.size() >= 4) {
+                        useExchange = 4;
+                        String[] playerGivesList = getStrings(null, 4);
+                        if (playerGivesList != null) {
+                            for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
+                            player.cards.add(playerReceives.charAt(0));
+                        }
+                    } else
+                        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange", "");
+                } else if (playerPort.equals("3")) {
+                    if (player.cards.size() >= 3) {
+                        useExchange = 3;
+                        String[] playerGivesList = null;
+                        playerGivesList = getStrings(playerGivesList, 3);
+                        if (playerGivesList != null) {
+                            for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
+                            player.cards.add(playerReceives.charAt(0));
+                        }
+                    } else
+                        StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange", "");
+                } else
+                    StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange", "");
+            }
             Buttons_4ExchangePort.messageToPass = null;
-            if (!playerPort.equals("3") && !playerPort.equals("4") && Collections.frequency(player.cards, playerPort.charAt(0)) >= 2) {
-                player.cards.remove(Character.valueOf(playerPort.charAt(0)));
-                player.cards.remove(Character.valueOf(playerPort.charAt(0)));
-                player.cards.add(playerReceives.charAt(0));
-            } else if (playerPort.equals("4")) {
-                if (player.cards.size() >= 4) {
-                    useExchange = 4;
-                    String[] playerGivesList = getStrings(null, 4);
-                    for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
-                    player.cards.add(playerReceives.charAt(0));
-                } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
-            } else if (playerPort.equals("3")) {
-                if (player.cards.size() >= 3) {
-                    useExchange = 3;
-                    String[] playerGivesList = null;
-                    playerGivesList = getStrings(playerGivesList, 3);
-                    for (String item : playerGivesList) player.cards.remove(Character.valueOf(item.charAt(0)));
-                    player.cards.add(playerReceives.charAt(0));
-                } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
-            } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources for exchange","");
         }
     }
 
@@ -75,17 +88,23 @@ public class ExchangeWithPorts {
             }
             Buttons_4Exchange.messageToPass = null;
             Buttons_4Exchange.message = "";
-            playerGivesList = playerGives.split(" ");
-            List<String> givesPlayer = Arrays.asList(playerGives.split(" "));
-            List<String> cardsPlayer = player.cards.stream().map(String::valueOf).toList();
-            isAllRight = true;
-            for (String card : givesPlayer) {
-                if (Collections.frequency(cardsPlayer, card) < Collections.frequency(givesPlayer, card)) {
-                    isAllRight = false;
-                    break;
+            if (!playerGives.contains("Cancel exchange")) {
+                playerGivesList = playerGives.split(" ");
+                List<String> givesPlayer = Arrays.asList(playerGives.split(" "));
+                List<String> cardsPlayer = player.cards.stream().map(String::valueOf).toList();
+                isAllRight = true;
+                for (String card : givesPlayer) {
+                    if (Collections.frequency(cardsPlayer, card) < Collections.frequency(givesPlayer, card)) {
+                        isAllRight = false;
+                        break;
+                    }
                 }
+                if (!isAllRight)
+                    StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you've made a mistake while choosing<br> resources to give.<br>Try one more time", "");
+            } else {
+                isAllRight = true;
+                return null;
             }
-            if (!isAllRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you've made a mistake while choosing<br> resources to give.<br>Try one more time", "");
         }
         return playerGivesList;
     }

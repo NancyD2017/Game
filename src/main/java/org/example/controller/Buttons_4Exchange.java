@@ -27,12 +27,13 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
         if (ExchangeWithPorts.player.cards.contains('t')) buttonPanel.add(buttonMaker("t"));
         if (ExchangeWithPorts.player.cards.contains('w')) buttonPanel.add(buttonMaker("w"));
         if (ExchangeWithPorts.player.cards.contains('b')) buttonPanel.add(buttonMaker("b"));
+        buttonPanel.add(buttonMaker("Cancel exchange"));
         panel.add(buttonPanel);
         add(panel);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (chosen < ExchangeWithPorts.useExchange - 1) {
+        if (chosen < ExchangeWithPorts.useExchange - 1 && !e.getActionCommand().equals("Cancel exchange")) {
             message += e.getActionCommand() + " ";
             chosen++;
         } else {
@@ -42,9 +43,15 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
         }
     }
     private JButton buttonMaker(String resource){
-        Image image = new ImageIcon("src/main/resources/" + resource + "_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
-        ImageIcon s = new ImageIcon(image);
-        JButton b = new JButton(s);
+        if (resource.length() == 1) {
+            Image image = new ImageIcon("src/main/resources/" + resource + "_card.png").getImage().getScaledInstance(80, 120, Image.SCALE_SMOOTH);
+            ImageIcon s = new ImageIcon(image);
+            JButton b = new JButton(s);
+            b.setActionCommand(resource);
+            b.addActionListener(this);
+            return b;
+        }
+        JButton b = new JButton(resource);
         b.setActionCommand(resource);
         b.addActionListener(this);
         return b;

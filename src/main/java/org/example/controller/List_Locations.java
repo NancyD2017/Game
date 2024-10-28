@@ -34,7 +34,7 @@ public class List_Locations extends JFrame implements ActionListener {
         add(label);
         add(firstComboBox);
         add(secondComboBox);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(700, 450);
         setLocationRelativeTo(null);
         setResizable(false);

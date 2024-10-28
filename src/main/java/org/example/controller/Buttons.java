@@ -35,7 +35,7 @@ public class Buttons extends JPanel implements ActionListener {
         JFrame frame = new JFrame("");
         frame.add(q);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Buttons buttons;
         name = className;
         switch (className) {

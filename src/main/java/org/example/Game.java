@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.model.Model;
 import org.example.model.Player;
 
 import javax.imageio.ImageIO;
@@ -71,10 +70,10 @@ public class Game extends Canvas implements Runnable {
                 }
                 g.drawString("Player " + (i + 1), (int) (x * percent), (int) (y * percent));
             }
-            if (Model.cubesNumber > 0) {
+            if (cubesNumber > 0) {
                 g.setColor(Color.white);
                 g.setFont(new Font("Arial", Font.BOLD, (int) (percent * 60)));
-                g.drawString(String.valueOf(Model.cubesNumber), (int) (percent * 296), (int) (percent * 530));
+                g.drawString(String.valueOf(cubesNumber), (int) (percent * 296), (int) (percent * 530));
             }
                 g.setFont(new Font("Arial", Font.BOLD, (int) (percent * 24)));
                 g.setColor(Color.WHITE);

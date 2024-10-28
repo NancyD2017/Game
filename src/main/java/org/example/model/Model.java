@@ -127,31 +127,21 @@ public class Model {
     }
     Integer illusionOfChoice(Integer l, Player player) {                                                  //каждый ход игрока он может что-то купить, что-то построить или обменяться
         boolean allRight = false;
-        StringCatcher.makeMessage("Player " + (l + 1) + ", it's your turn. Choose your next action", "Turn");
-        while (!allRight) {
+        do {
+            StringCatcher.makeMessage("Player " + (l + 1) + ", it's your turn. Choose your next action", "Turn");
             Integer action = null;
-            while (action == null) action = (Integer) StringCatcher.getData("org.example.controller.Buttons_Turns");
+            while (action == null) {
+                action = (Integer) StringCatcher.getData("org.example.controller.Buttons_Turns");
+            }
             Buttons_Turns.messageToPass = null;
             switch (action) {
-                case 1 -> {
-                    allRight = true;
-                    l -= b.act(player);
-                }
-                case 2 -> {
-                    allRight = true;
-                    ports.act(player);
-                }
-                case 3 -> {
-                    allRight = true;
-                    p.act(player);
-                }
-                case 4 -> {
-                    allRight = true;
-                    new EvolutionCards().main(player);
-                }
+                case 1 -> l -= b.act(player);
+                case 2 -> ports.act(player);
+                case 3 -> p.act(player);
+                case 4 -> new EvolutionCards().main(player);
                 case 5 -> allRight = true;
             }
-        }
+        } while (!allRight);
         return l;
     }
 }

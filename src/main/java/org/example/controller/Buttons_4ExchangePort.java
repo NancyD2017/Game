@@ -24,6 +24,7 @@ public class Buttons_4ExchangePort extends Buttons implements ActionListener{
         buttonPanel.add(buttonMaker("t"));
         buttonPanel.add(buttonMaker("w"));
         buttonPanel.add(buttonMaker("b"));
+        buttonPanel.add(buttonMaker("Cancel exchange"));
         panel.add(buttonPanel);
         add(panel);
     }
