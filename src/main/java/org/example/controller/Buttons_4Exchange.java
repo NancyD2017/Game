@@ -19,7 +19,7 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
         panel.add(label);
         add(Box.createVerticalGlue());
 
-        JPanel buttonPanel = new JPanel(new GridLayout(0, 5));
+        JPanel buttonPanel = new JPanel(new GridLayout(0, 6));
         buttonPanel.setAlignmentX(label.getAlignmentX());
 
         if (ExchangeWithPorts.player.cards.contains('s')) buttonPanel.add(buttonMaker("s"));
@@ -27,13 +27,13 @@ public class Buttons_4Exchange extends Buttons implements ActionListener{
         if (ExchangeWithPorts.player.cards.contains('t')) buttonPanel.add(buttonMaker("t"));
         if (ExchangeWithPorts.player.cards.contains('w')) buttonPanel.add(buttonMaker("w"));
         if (ExchangeWithPorts.player.cards.contains('b')) buttonPanel.add(buttonMaker("b"));
-        buttonPanel.add(buttonMaker("Cancel exchange"));
+        buttonPanel.add(buttonMaker("Cancel"));
         panel.add(buttonPanel);
         add(panel);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (chosen < ExchangeWithPorts.useExchange - 1 && !e.getActionCommand().equals("Cancel exchange")) {
+        if (chosen < ExchangeWithPorts.useExchange - 1 && !e.getActionCommand().equals("Cancel")) {
             message += e.getActionCommand() + " ";
             chosen++;
         } else {
