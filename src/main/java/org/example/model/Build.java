@@ -20,15 +20,14 @@ class Build {
         String someBuilding = null;
         while (someBuilding == null || someBuilding.isEmpty()) someBuilding = (String) StringCatcher.getData("org.example.controller.Buttons_Build");
         Buttons_Build.messageToPass = null;
-        boolean allRight = false;
+        int allRight = -1;
         switch (someBuilding) {
             case "Road" -> {
                 if (player.roads > 0) {
                     toRemove = new ArrayList<>(List.of('b', 'w'));
                     if (new HashSet<>(player.cards).containsAll(toRemove)) {
-                        allRight = r.main(player);
+                        allRight = r.main(player, true);
                     } else {
-                        allRight = true;
                         StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
                 } else StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough roads", "Removal");
@@ -37,7 +36,7 @@ class Build {
             case "Town" -> {
                 if (player.towns > 0) {
                     if (new HashSet<>(player.cards).containsAll(List.of('b', 'w', 's', 'f'))) {
-                        locations = new List_Locations("Choose row and column of your town:");
+                        locations = new List_Locations("Choose row and column of your town:", true);
                         Integer column = null;
                         while (column == null) {
                             try {
@@ -55,7 +54,7 @@ class Build {
                                         ((row + 1 == t.ro) && ((t.col * 4 + 2 == column && row >= 6) || (t.col * 4 == column && row <= 6))))) {
                                     player.available.add(new FieldItem(row, column, Item.T));
                                     Model.field[row][column] = Item.T;
-                                    allRight = true;
+                                    allRight = 1;
                                     player.points += 1;
                                     e.getResources(row, column, player);
                                     StringCatcher.passGraphics(row, column, player.color, "town");
@@ -65,19 +64,19 @@ class Build {
                                     break;
                                 }
                     } else {
-                        allRight = true;
+                        allRight = 1;
                         StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
                 } else {
                     StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough towns", "Removal");
-                    allRight = true;
+                    allRight = 1;
                 }
-                if (!allRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
+                if (allRight == -1) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
             }
             case "City" -> {
                 if (player.cities > 0) {
                     if (countOccurrences(player.cards, 's') >= 2 && countOccurrences(player.cards, 't') >= 3) {
-                        locations = new List_Locations("Player " + (playerList.indexOf(player) + 1) + ", choose the location of city");
+                        locations = new List_Locations("Player " + (playerList.indexOf(player) + 1) + ", choose the location of city", true);
                         Integer columnC = null;
                         while (columnC == null) {
                             try {
@@ -93,7 +92,7 @@ class Build {
                                 if (t.item == Item.T && t.col.equals(columnC) && t.ro.equals(rowC)) {
                                     player.available.add(new FieldItem(rowC, columnC, Item.C));
                                     Model.field[rowC][columnC] = Item.C;
-                                    allRight = true;
+                                    allRight = 1;
                                     player.points += 1;
                                     e.getResources(rowC, columnC, player);
                                     StringCatcher.passGraphics(rowC, columnC, player.color, "city");
@@ -103,24 +102,24 @@ class Build {
                                     break;
                                 }
                     } else {
-                        allRight = true;
+                        allRight = 1;
                         StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
                     }
                 } else {
                     StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough cities", "Removal");
-                    allRight = true;
+                    allRight = 1;
                 }
-                if (!allRight) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
+                if (allRight == -1) StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates. Try one more time", "Removal");
             }
+            case "Cancel" -> allRight = 1;
         }
-        if (!allRight) return 1;
-        else {
+        if (allRight == 1) {
             if (toRemove != null) for (Character c : toRemove) {
                 player.cards.remove(c);
             }
             toRemove = null;
-            return 0;
         }
+        return 0;
     }
     public int countOccurrences(List<Character> cards, char ch) {
         int count = 0;

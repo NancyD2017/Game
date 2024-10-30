@@ -20,6 +20,7 @@ public class Buttons_Build extends Buttons implements ActionListener{
         add(buttonMaker("Road"));
         add(buttonMaker("Town"));
         add(buttonMaker("City"));
+        add(buttonMaker("Cancel"));
     }
     @Override
     public void actionPerformed(ActionEvent e) {

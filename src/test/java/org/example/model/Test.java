@@ -16,10 +16,10 @@ class TestModel {
         Player player = new Player();
         player.available.clear();
         System.out.println("Please, coordinates 3 and 2");//мне пришлось делать вывод таких сообщений, потому что для каких-то классов нужны некоторые заблаговременные действия, которые отображаются на поле. А здесь поле не показать
-        assertFalse(r.main(player));
+        assertEquals(-1, r.main(player, false));
         player.available.add(new FieldItem(2,2,Item.T)); //необходимо построить город, чтобы построить дорожку
         System.out.println("Please, enter coordinates 3 and 2\n");
-        assertTrue(r.main(player) && Model.field[2][1] == Item.R && dibs.size() == 1 && player.ports.contains("w")); //задаем правильные координаты (3 и 2) и проверяем
+        assertTrue(r.main(player, false) == 1 && Model.field[2][1] == Item.R && dibs.size() == 1 && player.ports.contains("w")); //задаем правильные координаты (3 и 2) и проверяем
     }
     @Test
     void ResourcesTest() {

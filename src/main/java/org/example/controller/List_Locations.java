@@ -20,7 +20,7 @@ public class List_Locations extends JFrame implements ActionListener {
     String[] column5_7 = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"};
     String[] column6 = {"1", "2", "3", "4", "5", "6"};
 
-    public List_Locations(String text) {
+    public List_Locations(String text, boolean possibleToCancel) {
         super("");
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.PLAIN, (int) (40 * percent)));
@@ -34,6 +34,11 @@ public class List_Locations extends JFrame implements ActionListener {
         add(label);
         add(firstComboBox);
         add(secondComboBox);
+        JButton b = new JButton("Cancel");
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setActionCommand("Cancel");
+        b.addActionListener(this);
+        if (possibleToCancel) add(b);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(700, 450);
         setLocationRelativeTo(null);
@@ -42,6 +47,11 @@ public class List_Locations extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Cancel")) {
+            selectedRow = "0";
+            selectedColumn = "0";
+            dispose();
+        };
         if (selectedRow != firstComboBox.getSelectedItem()) {
             selectedRow = (String) firstComboBox.getSelectedItem();
             switch (selectedRow) {
@@ -59,7 +69,5 @@ public class List_Locations extends JFrame implements ActionListener {
         }
     }
 
-    public void main() {
-        new List_Locations("Choose row and column of your item:");
-    }
+
 }

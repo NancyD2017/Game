@@ -9,10 +9,10 @@ import java.util.List;
 import static org.example.model.Model.playerList;
 
 class Road {
-    boolean main(Player player) {
+    int main(Player player, boolean possibleToCancel) {
         PossiblePorts p = new PossiblePorts();
         boolean allRight = false;
-        List_Locations locations = new List_Locations("Choose row and column of your road:");
+        List_Locations locations = new List_Locations("Choose row and column of your road:", possibleToCancel);
         Integer columnR = null;
         while (columnR == null) {
             try {
@@ -20,10 +20,12 @@ class Road {
             } catch (Exception ignored) {
             }
         }
+        if (columnR == -1) return 0;
         Integer rowR = null;
         while (rowR == null) {
             rowR = Integer.parseInt(locations.selectedRow) - 1;
         }
+        if (rowR == -1) return 0;
         List<FieldItem> toAdd = new ArrayList<>();
         List<FieldItem> playersArsenal = player.available;
             for (FieldItem t : playersArsenal) {
@@ -49,10 +51,10 @@ class Road {
                 }
             } if (!allRight){
                 StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", wrong coordinates of the road<br>Try one more time","");
-                return false;
+                return -1;
             }
         player.available.addAll(toAdd);
-        return true;
+        return 1;
     }
 }
 

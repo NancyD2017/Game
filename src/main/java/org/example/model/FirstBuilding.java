@@ -12,7 +12,7 @@ class FirstBuilding {
         Resources e = new Resources();
         PossiblePorts p = new PossiblePorts();
         List_Locations locations;
-        locations = new List_Locations("<html><div style='text-align: center;'>" + addText + "Choose the location of town");
+        locations = new List_Locations("<html><div style='text-align: center;'>" + addText + "Choose the location of town", false);
         Integer column = null;
         while (column == null) {
             try {
@@ -30,7 +30,7 @@ class FirstBuilding {
                 playerList.get(player).color = mcolor;
                 Model.field[row][column] = Item.T;
                 for (int j = 0; j < 1; j++) {
-                    locations = new List_Locations("choose location of road near town    ");
+                    locations = new List_Locations("choose location of road near town    ", false);
                     Integer columnR = null;
                     while (columnR == null) {
                         try {
