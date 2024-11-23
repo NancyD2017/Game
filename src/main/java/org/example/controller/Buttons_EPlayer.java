@@ -30,11 +30,13 @@ public class Buttons_EPlayer extends Buttons implements ActionListener {
         if (Model.playerList.indexOf(ExchangeWithPlayer.player) != 1) add(buttonMaker("2"));
         if (Model.players > 2 && Model.playerList.indexOf(ExchangeWithPlayer.player) != 2) add(buttonMaker("3"));
         if (Model.players == 4 && Model.playerList.indexOf(ExchangeWithPlayer.player) != 3) add(buttonMaker("4"));
+        add(buttonMaker("Cancel"));
     }
     private JButton buttonMaker(String command){
         JButton b1 = new JButton(command);
         b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        b1.setActionCommand(command);
+        if (command.equals("Cancel")) b1.setActionCommand("0");
+        else b1.setActionCommand(command);
         b1.addActionListener(this);
         return b1;
     }

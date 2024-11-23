@@ -44,25 +44,27 @@ class Build {
                             } catch (Exception ignored) {
                             }
                         }
+                        if (column == -1) return 0;
                         Integer row = null;
                         while (row == null) {
                             row = Integer.parseInt(locations.selectedRow) - 1;
                         }
-                            for (FieldItem t : player.available)
-                                if (Model.field[row][column] == Item.O && (((t.ro.equals(row)) && (t.col == column - 1 || t.col == column + 1)) ||
-                                        ((row == t.ro + 1) && ((t.col * 4 + 2 == column && row <= 4) || (t.col * 4 == column && row >= 6))) ||
-                                        ((row + 1 == t.ro) && ((t.col * 4 + 2 == column && row >= 6) || (t.col * 4 == column && row <= 6))))) {
-                                    player.available.add(new FieldItem(row, column, Item.T));
-                                    Model.field[row][column] = Item.T;
-                                    allRight = 1;
-                                    player.points += 1;
-                                    e.getResources(row, column, player);
-                                    StringCatcher.passGraphics(row, column, player.color, "town");
-                                    player.towns -= 1;
-                                    toRemove = new ArrayList<>(List.of('b', 'w', 's', 'f'));
-                                    player.towns -= 1;
-                                    break;
-                                }
+                        if (row == -1) return 0;
+                        for (FieldItem t : player.available)
+                            if (Model.field[row][column] == Item.O && (((t.ro.equals(row)) && (t.col == column - 1 || t.col == column + 1)) ||
+                                    ((row == t.ro + 1) && ((t.col * 4 + 2 == column && row <= 4) || (t.col * 4 == column && row >= 6))) ||
+                                    ((row + 1 == t.ro) && ((t.col * 4 + 2 == column && row >= 6) || (t.col * 4 == column && row <= 6))))) {
+                                player.available.add(new FieldItem(row, column, Item.T));
+                                Model.field[row][column] = Item.T;
+                                allRight = 1;
+                                player.points += 1;
+                                e.getResources(row, column, player);
+                                StringCatcher.passGraphics(row, column, player.color, "town");
+                                player.towns -= 1;
+                                toRemove = new ArrayList<>(List.of('b', 'w', 's', 'f'));
+                                player.towns -= 1;
+                                break;
+                            }
                     } else {
                         allRight = 1;
                         StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");
@@ -76,7 +78,7 @@ class Build {
             case "City" -> {
                 if (player.cities > 0) {
                     if (countOccurrences(player.cards, 's') >= 2 && countOccurrences(player.cards, 't') >= 3) {
-                        locations = new List_Locations("Player " + (playerList.indexOf(player) + 1) + ", choose the location of city", true);
+                        locations = new List_Locations("Choose row and column of your city", true);
                         Integer columnC = null;
                         while (columnC == null) {
                             try {
@@ -84,23 +86,25 @@ class Build {
                             } catch (Exception ignored) {
                             }
                         }
+                        if (columnC == -1) return 0;
                         Integer rowC = null;
                         while (rowC == null) {
                             rowC = Integer.parseInt(locations.selectedRow) - 1;
                         }
-                            for (FieldItem t : player.available)
-                                if (t.item == Item.T && t.col.equals(columnC) && t.ro.equals(rowC)) {
-                                    player.available.add(new FieldItem(rowC, columnC, Item.C));
-                                    Model.field[rowC][columnC] = Item.C;
-                                    allRight = 1;
-                                    player.points += 1;
-                                    e.getResources(rowC, columnC, player);
-                                    StringCatcher.passGraphics(rowC, columnC, player.color, "city");
-                                    toRemove = new ArrayList<>(List.of('s', 's', 't', 't', 't'));
-                                    player.cities -= 1;
-                                    player.towns += 1;
-                                    break;
-                                }
+                        if (rowC == -1) return 0;
+                        for (FieldItem t : player.available)
+                            if (t.item == Item.T && t.col.equals(columnC) && t.ro.equals(rowC)) {
+                                player.available.add(new FieldItem(rowC, columnC, Item.C));
+                                Model.field[rowC][columnC] = Item.C;
+                                allRight = 1;
+                                player.points += 1;
+                                e.getResources(rowC, columnC, player);
+                                StringCatcher.passGraphics(rowC, columnC, player.color, "city");
+                                toRemove = new ArrayList<>(List.of('s', 's', 't', 't', 't'));
+                                player.cities -= 1;
+                                player.towns += 1;
+                                break;
+                            }
                     } else {
                         allRight = 1;
                         StringCatcher.makeMessage("Player " + (playerList.indexOf(player) + 1) + ", you don't have enough resources", "Removal");

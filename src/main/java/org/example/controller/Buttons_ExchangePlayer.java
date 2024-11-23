@@ -30,16 +30,24 @@ public class Buttons_ExchangePlayer extends Buttons implements ActionListener{
         for (Character item: Set.of('s','f','t','w','b')) {
             if (ExchangeWithPlayer.player.cards.contains(item)) buttonPanel.add(buttonMaker(item.toString()));
         }
+        JButton b7 = new JButton("Cancel");
+        b7.setActionCommand("0");
+        b7.addActionListener(this);
         buttonPanel.add(b6);
+        buttonPanel.add(b7);
         panel.add(buttonPanel);
         add(panel);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!e.getActionCommand().equals("OK")) {
+        if (!e.getActionCommand().equals("OK") && !e.getActionCommand().equals("0")) {
             message += e.getActionCommand() + " ";
-        } else {
+        } else if (!e.getActionCommand().equals("0")) {
             messageToPass = String.valueOf(message);
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            frame.dispose();
+        } else {
+            messageToPass = "0";
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             frame.dispose();
         }

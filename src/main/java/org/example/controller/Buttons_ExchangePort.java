@@ -32,6 +32,7 @@ public class Buttons_ExchangePort extends Buttons implements ActionListener{
         for (String item: Set.of("s","f","t","w","b","3")) {
             if (ExchangeWithPorts.player.ports.contains(item)) buttonPanel.add(buttonMaker(item));
         }
+        buttonPanel.add(buttonMaker("Cancel"));
         panel.add(buttonPanel);
         add(panel);
     }
@@ -42,9 +43,15 @@ public class Buttons_ExchangePort extends Buttons implements ActionListener{
         frame.dispose();
     }
     private JButton buttonMaker(String name){
-        Image image = new ImageIcon("src/main/resources/port_" + name + ".png").getImage();
-        ImageIcon s = new ImageIcon(image);
-        JButton b = new JButton(s);
+        if (!name.equals("Cancel")) {
+            Image image = new ImageIcon("src/main/resources/port_" + name + ".png").getImage();
+            ImageIcon s = new ImageIcon(image);
+            JButton b = new JButton(s);
+            b.setActionCommand(name);
+            b.addActionListener(this);
+            return b;
+        }
+        JButton b = new JButton(name);
         b.setActionCommand(name);
         b.addActionListener(this);
         return b;
