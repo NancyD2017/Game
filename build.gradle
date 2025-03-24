@@ -1,9 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
 }
-
-group 'org.example'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -15,6 +13,16 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainClass = 'org.example.model.Play'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.example.model.Play'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

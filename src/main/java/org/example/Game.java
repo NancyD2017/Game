@@ -97,7 +97,7 @@ public class Game extends Canvas implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         if (false) addRoadButtons(frame);
-        if (true) addCityOrTownButtons(frame);
+        if (false) addCityOrTownButtons(frame);
         frame.add(game, BorderLayout.CENTER);
         frame.pack();
         frame.setResizable(false);
