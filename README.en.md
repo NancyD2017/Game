@@ -12,7 +12,7 @@ A Java desktop implementation of the classic board game **Catan**, redesigned wi
 ![Player Setup](https://github.com/user-attachments/assets/19d96390-b096-4651-9dca-d342f2786b48)
 
 <!-- Screenshot: Main game board — show the full hexagonal board with numbered tiles, player settlements/roads placed, and the resource/action panel on the side -->
-![Game Board](docs/game-board.png)(https://github.com/user-attachments/assets/1a6989ac-ede0-45c0-b707-d26a371f79e6)
+![Game Board](https://github.com/user-attachments/assets/1a6989ac-ede0-45c0-b707-d26a371f79e6)
 
 <!-- Screenshot: Trading dialog — show the trade offer screen between two players, with resource selection dropdowns on both sides -->
 ![Trading](https://github.com/user-attachments/assets/b960536e-cbd4-4782-ab9d-75c131d93426)
