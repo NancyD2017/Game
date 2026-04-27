@@ -28,7 +28,6 @@ This implementation uses **simplified rules tuned for friends who are new to Cat
 | **Robber** | Placed on 7, blocks production | Robber does not exists |
 | **Trading** | Bank trades at 4:1 (or port rate) | Players can freely propose any trade ratio |
 | **Resource cap** | Discard half on 7 if >7 cards | No discard rule — keep all your resources |
-| **Turn order** | Strict clockwise | Flexible — supports catch-up suggestions |
 
 These changes make the game more relaxed and better suited for first-time players, game night onboarding, or quick sessions.
 
